@@ -1,0 +1,227 @@
+@prefix : <http://www.semanticweb.org/andre/ontologies/2024/1/untitled-ontology-2/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://www.semanticweb.org/andre/ontologies/2024/1/untitled-ontology-2/> .
+
+<http://rpcw.di.uminho.pt/2024/plantas> rdf:type owl:Ontology .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  http://rpcw.di.uminho.pt/2024/plantas#dccreator
+:dccreator rdf:type owl:AnnotationProperty .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://rpcw.di.uminho.pt/2024/plantas#temAtualização
+:temAtualização rdf:type owl:ObjectProperty ;
+                rdfs:domain :Planta ;
+                rdfs:range :DataAtualização ;
+                :dccreator "" .
+
+
+###  http://rpcw.di.uminho.pt/2024/plantas#temEspécie
+:temEspécie rdf:type owl:ObjectProperty ;
+            rdfs:domain :Planta ;
+            rdfs:range :Espécie ;
+            :dccreator "" .
+
+
+###  http://rpcw.di.uminho.pt/2024/plantas#temEstado
+:temEstado rdf:type owl:ObjectProperty ;
+           rdfs:domain :Planta ;
+           rdfs:range :Estado ;
+           :dccreator "" .
+
+
+###  http://rpcw.di.uminho.pt/2024/plantas#temFreguesia
+:temFreguesia rdf:type owl:ObjectProperty ;
+              rdfs:domain :Planta ;
+              rdfs:range :Freguesia .
+
+
+###  http://rpcw.di.uminho.pt/2024/plantas#temGestor
+:temGestor rdf:type owl:ObjectProperty ;
+           rdfs:domain :Planta ;
+           rdfs:range :Gestor ;
+           :dccreator "" .
+
+
+###  http://rpcw.di.uminho.pt/2024/plantas#temIntervenções
+:temIntervenções rdf:type owl:ObjectProperty ;
+                 rdfs:domain :Planta ;
+                 rdfs:range :Intervenções ;
+                 :dccreator "" .
+
+
+###  http://rpcw.di.uminho.pt/2024/plantas#temLocal
+:temLocal rdf:type owl:ObjectProperty ;
+          rdfs:domain :Planta ;
+          rdfs:range :Local ;
+          :dccreator "" .
+
+
+###  http://rpcw.di.uminho.pt/2024/plantas#temRua
+:temRua rdf:type owl:ObjectProperty ;
+        rdfs:domain :Planta ;
+        rdfs:range :Rua ;
+        :dccreator "" .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://rpcw.di.uminho.pt/2024/plantas#caldeira
+:caldeira rdf:type owl:DatatypeProperty ;
+          rdfs:domain :Planta ;
+          rdfs:range xsd:string ;
+          :dccreator "" .
+
+
+###  http://rpcw.di.uminho.pt/2024/plantas#id
+:id rdf:type owl:DatatypeProperty ;
+    rdfs:domain :Planta ;
+    rdfs:range xsd:int ;
+    :dccreator "" .
+
+
+###  http://rpcw.di.uminho.pt/2024/plantas#implantação
+:implantação rdf:type owl:DatatypeProperty ;
+             rdfs:domain :Planta ;
+             rdfs:range xsd:string ;
+             :dccreator "" .
+
+
+###  http://rpcw.di.uminho.pt/2024/plantas#nome_cientifico
+:nome_cientifico rdf:type owl:DatatypeProperty ;
+                 rdfs:domain :Planta ;
+                 rdfs:range xsd:string ;
+                 :dccreator "" .
+
+
+###  http://rpcw.di.uminho.pt/2024/plantas#numero_registo
+:numero_registo rdf:type owl:DatatypeProperty ;
+                rdfs:domain :Planta ;
+                rdfs:range xsd:int ;
+                :dccreator "" .
+
+
+###  http://rpcw.di.uminho.pt/2024/plantas#tutor
+:tutor rdf:type owl:DatatypeProperty ;
+       rdfs:domain :Planta ;
+       rdfs:range xsd:string ;
+       :dccreator "" .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://rpcw.di.uminho.pt/2024/plantas#DataAtualização
+:DataAtualização rdf:type owl:Class .
+
+
+###  http://rpcw.di.uminho.pt/2024/plantas#Espécie
+:Espécie rdf:type owl:Class .
+
+
+###  http://rpcw.di.uminho.pt/2024/plantas#Estado
+:Estado rdf:type owl:Class .
+
+
+###  http://rpcw.di.uminho.pt/2024/plantas#Freguesia
+:Freguesia rdf:type owl:Class .
+
+
+###  http://rpcw.di.uminho.pt/2024/plantas#Gestor
+:Gestor rdf:type owl:Class .
+
+
+###  http://rpcw.di.uminho.pt/2024/plantas#Intervenções
+:Intervenções rdf:type owl:Class .
+
+
+###  http://rpcw.di.uminho.pt/2024/plantas#Local
+:Local rdf:type owl:Class .
+
+
+###  http://rpcw.di.uminho.pt/2024/plantas#Planta
+:Planta rdf:type owl:Class .
+
+
+###  http://rpcw.di.uminho.pt/2024/plantas#Rua
+:Rua rdf:type owl:Class .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  http://rpcw.di.uminho.pt/2024/plantas#Adulto
+:Adulto rdf:type owl:NamedIndividual ,
+                 :Estado .
+
+
+###  http://rpcw.di.uminho.pt/2024/plantas#Alcabideche
+:Alcabideche rdf:type owl:NamedIndividual ,
+                      :Freguesia .
+
+
+###  http://rpcw.di.uminho.pt/2024/plantas#DGEV
+:DGEV rdf:type owl:NamedIndividual ,
+               :Gestor .
+
+
+###  http://rpcw.di.uminho.pt/2024/plantas#Rua_Júlio_Dinis
+:Rua_Júlio_Dinis rdf:type owl:NamedIndividual ,
+                          :Rua .
+
+
+###  http://rpcw.di.uminho.pt/2024/plantas#Zambujeiro
+:Zambujeiro rdf:type owl:NamedIndividual ,
+                     :Local .
+
+
+###  http://rpcw.di.uminho.pt/2024/plantas#pinheiro_manso
+:pinheiro_manso rdf:type owl:NamedIndividual ,
+                         :Espécie .
+
+
+###  http://rpcw.di.uminho.pt/2024/plantas#20615557
+<http://rpcw.di.uminho.pt/2024/plantas#20615557> rdf:type owl:NamedIndividual ,
+                                                          :Planta ;
+                                                 :temAtualização <http://rpcw.di.uminho.pt/2024/plantas#23/07/2021_19:50:54> ;
+                                                 :temEspécie :pinheiro_manso ;
+                                                 :temEstado :Adulto ;
+                                                 :temFreguesia :Alcabideche ;
+                                                 :temGestor :DGEV ;
+                                                 :temIntervenções <http://rpcw.di.uminho.pt/2024/plantas#6> ;
+                                                 :temLocal :Zambujeiro ;
+                                                 :temRua :Rua_Júlio_Dinis ;
+                                                 :caldeira "Sim" ;
+                                                 :id 20615557 ;
+                                                 :implantação "Arruamento" ;
+                                                 :nome_cientifico "Pinus pinea" ;
+                                                 :numero_registo 3 ;
+                                                 :tutor "Sim" .
+
+
+###  http://rpcw.di.uminho.pt/2024/plantas#23/07/2021_19:50:54
+<http://rpcw.di.uminho.pt/2024/plantas#23/07/2021_19:50:54> rdf:type owl:NamedIndividual ,
+                                                                     :DataAtualização .
+
+
+###  http://rpcw.di.uminho.pt/2024/plantas#6
+<http://rpcw.di.uminho.pt/2024/plantas#6> rdf:type owl:NamedIndividual ,
+                                                   :Intervenções .
+
+
+###  Generated by the OWL API (version 4.5.26.2023-07-17T20:34:13Z) https://github.com/owlcs/owlapi
