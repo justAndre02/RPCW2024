@@ -117,6 +117,17 @@
        :data_nascimento "1999-4-19" ;
        :id_aluno "A1510" ;
        :nome_aluno "ADEMAR FONTES DE MAGALHAES GONCALVES" .
+       
+
+###  http://rpcw.di.uminho.pt/2024/escola_musica#A32597
+                                            :A32597 rdf:type owl:NamedIndividual ,
+                                                        :aluno ;
+                                            :temCurso :CS19 ;
+                                            :temInstrumentoAluno :Violoncelo ;
+                                            :ano_aluno 7 ;
+                                            :data_nascimento "2004-9-5" ;
+                                            :id_aluno "A32597" ;
+                                            :nome_aluno "ADERITO NELSON MIRANDA DE OLIVEIRA" .
 
 
 ###  http://rpcw.di.uminho.pt/2024/escola_musica#CB8
