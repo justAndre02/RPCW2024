@@ -2,6 +2,7 @@
 À semelhança do TPC da semana passada este trabalho consiste outra vez nos seguintes passos:
 * Analisar Dataset
 * Criar uma ontologia: classes, object properties e data properties
+* Criar um script para povoar a ontologia
 * Criar um repositório no graphDB com ontologia
 
 ## Ficheiros ##
