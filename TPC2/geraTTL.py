@@ -6,67 +6,40 @@ with open('dataset.json', 'r', encoding='utf-8') as f:
 
 ttl = ""
 
-for planta in bd:
+for aluno in bd['alunos']:
     registo = f"""
-###  http://rpcw.di.uminho.pt/2024/plantas#{planta['Estado'].replace(" ", "_")}
-:{planta['Estado'].replace(" ", "_")} rdf:type owl:NamedIndividual ,
-                 :Estado .
-
-
-###  http://rpcw.di.uminho.pt/2024/plantas#{planta['Freguesia'].replace(" ", "_")}
-:{planta['Freguesia'].replace(" ", "_")} rdf:type owl:NamedIndividual ,
-                      :Freguesia .
-
-
-###  http://rpcw.di.uminho.pt/2024/plantas#{planta['Gestor'].replace(" ", "_")}
-:{planta['Gestor'].replace(" ", "_")} rdf:type owl:NamedIndividual ,
-               :Gestor .
-
-
-###  http://rpcw.di.uminho.pt/2024/plantas#{planta['Rua'].replace(" ", "_")}
-:{planta['Rua'].replace(" ", "_")} rdf:type owl:NamedIndividual ,
-                          :Rua .
-
-
-###  http://rpcw.di.uminho.pt/2024/plantas#{planta['Local'].replace(" ", "_")}
-:{planta['Local'].replace(" ", "_")} rdf:type owl:NamedIndividual ,
-                     :Local .
-
-
-###  http://rpcw.di.uminho.pt/2024/plantas#{planta['Espécie'].replace(" ", "_")}
-:{planta['Espécie'].replace(" ", "_")} rdf:type owl:NamedIndividual ,
-                         :Espécie .
-
-
-###  http://rpcw.di.uminho.pt/2024/plantas#{planta['Id']}
-<http://rpcw.di.uminho.pt/2024/plantas#{planta['Id']}> rdf:type owl:NamedIndividual ,
-                                                          :Planta ;
-                                                 :temAtualização :{planta['Data de actualização'].replace(" ", "_")};
-                                                 :temEspécie :{planta['Espécie'].replace(" ", "_")} ;
-                                                 :temEstado :{planta['Estado'].replace(" ", "_")} ;
-                                                 :temFreguesia :{planta['Freguesia'].replace(" ", "_")} ;
-                                                 :temGestor :{planta['Gestor'].replace(" ", "_")} ;
-                                                 :temIntervenções :{planta['Número de intervenções']} ;
-                                                 :temLocal :{planta['Local'].replace(" ", "_")} ;
-                                                 :temRua :{planta['Rua'].replace(" ", "_")} ;
-                                                 :caldeira "{planta['Caldeira']}" ;
-                                                 :id {planta['Id']} ;
-                                                 :implantação "{planta['Implantação'].replace(" ", "_")}" ;
-                                                 :nome_cientifico "{planta['Nome Científico'].replace(" ", "_")}" ;
-                                                 :numero_registo {planta['Número de Registo']} ;
-                                                 :tutor "{planta['Tutor']}" .
-
-
-###  http://rpcw.di.uminho.pt/2024/plantas#{planta['Data de actualização'].replace(" ", "_")}
-:{planta['Data de actualização'].replace(" ", "_")} rdf:type owl:NamedIndividual ,
-            :DataAtualização .
-
-
-###  http://rpcw.di.uminho.pt/2024/plantas#{planta['Número de intervenções']}
-:{planta['Número de intervenções']} rdf:type owl:NamedIndividual ,
-            :Intervenções .
+###  http://rpcw.di.uminho.pt/2024/escola_musica#{aluno['id']}
+                                            :{aluno['id']} rdf:type owl:NamedIndividual ,
+                                                        :aluno ;
+                                            :temCurso :{aluno['curso']} ;
+                                            :temInstrumentoAluno :{aluno['instrumento']} ;
+                                            :ano_aluno {aluno['anoCurso']} ;
+                                            :data_nascimento "{aluno['dataNasc']}" ;
+                                            :id_aluno "{aluno['id']}" ;
+                                            :nome_aluno "{aluno['nome']}" .
 """
-    
+    ttl += registo
+
+for curso in bd['cursos']:
+    registo = f"""
+###  http://rpcw.di.uminho.pt/2024/escola_musica#{curso['id']}
+                                            :{curso['id']} rdf:type owl:NamedIndividual ,
+                                                        :curso ;
+                                            :temInstrumento :{curso['instrumento']['#text']} ;
+                                            :designacao_curso "{curso['designacao']}" ;
+                                            :duracao_curso {curso['duracao']} ;
+                                            :id_curso "{curso['id']}" .
+"""
+    ttl += registo
+
+for instrumento in bd['instrumentos']:
+    registo = f"""
+###  http://rpcw.di.uminho.pt/2024/escola_musica#{instrumento['#text']}
+                                            :{instrumento['#text']} rdf:type owl:NamedIndividual ,
+                                                            :instrumento ;
+                                                    :id_instrumento "{instrumento['id']}" ;
+                                                    :nome_instrumento "{instrumento['#text']}" .
+"""
     ttl += registo
 
 # Write the TTL data to a file
