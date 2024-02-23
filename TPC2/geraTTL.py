@@ -12,11 +12,11 @@ for aluno in bd['alunos']:
                                             :{aluno['id']} rdf:type owl:NamedIndividual ,
                                                         :aluno ;
                                             :temCurso :{aluno['curso']} ;
-                                            :temInstrumentoAluno :{aluno['instrumento']} ;
+                                            :temInstrumentoAluno :{aluno['instrumento'].replace(" ", "_")} ;
                                             :ano_aluno {aluno['anoCurso']} ;
                                             :data_nascimento "{aluno['dataNasc']}" ;
                                             :id_aluno "{aluno['id']}" ;
-                                            :nome_aluno "{aluno['nome']}" .
+                                            :nome_aluno "{aluno['nome'].replace(" ", "_")}" .
 """
     ttl += registo
 
@@ -25,8 +25,8 @@ for curso in bd['cursos']:
 ###  http://rpcw.di.uminho.pt/2024/escola_musica#{curso['id']}
                                             :{curso['id']} rdf:type owl:NamedIndividual ,
                                                         :curso ;
-                                            :temInstrumento :{curso['instrumento']['#text']} ;
-                                            :designacao_curso "{curso['designacao']}" ;
+                                            :temInstrumento :{curso['instrumento']['#text'].replace(" ", "_")} ;
+                                            :designacao_curso "{curso['designacao'].replace(" ", "_")}" ;
                                             :duracao_curso {curso['duracao']} ;
                                             :id_curso "{curso['id']}" .
 """
@@ -34,11 +34,11 @@ for curso in bd['cursos']:
 
 for instrumento in bd['instrumentos']:
     registo = f"""
-###  http://rpcw.di.uminho.pt/2024/escola_musica#{instrumento['#text']}
-                                            :{instrumento['#text']} rdf:type owl:NamedIndividual ,
+###  http://rpcw.di.uminho.pt/2024/escola_musica#{instrumento['#text'].replace(" ", "_")}
+                                            :{instrumento['#text'].replace(" ", "_")} rdf:type owl:NamedIndividual ,
                                                             :instrumento ;
                                                     :id_instrumento "{instrumento['id']}" ;
-                                                    :nome_instrumento "{instrumento['#text']}" .
+                                                    :nome_instrumento "{instrumento['#text'].replace(" ", "_")}" .
 """
     ttl += registo
 
