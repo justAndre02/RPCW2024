@@ -59,7 +59,7 @@ select ?peso ?numero_atomico ?bloco ?cr ?clasificacao ?cor ?grupo ?periodo ?ss ?
     resposta = requests.get(graphdb_endpoint, params={ 'query': sparql_query }, headers={ 'Accept': 'application/sparql-results+json' })
     if resposta.status_code == 200:
         dados = resposta.json()['results']['bindings']
-        return render_template('elemento.html', data = { 'name': elemento, 'data': dados })
+        return render_template('elemento.html', data = { 'name': nome, 'data': dados })
     else:
         return render_template('empty.html', data = { 'data': data_iso_formatada })
 
