@@ -1,6 +1,5 @@
 import requests
 import json
-import time
 
 
 # Define the DBpedia SPARQL endpoint
@@ -11,7 +10,7 @@ query = """
 PREFIX dbo: <http://dbpedia.org/ontology/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX dbp: <http://dbpedia.org/property/>
-select distinct ?film_title ?actor_name ?director_name ?writer_name ?screen_writer ?music_composers ?length ?film_genres  where {
+select distinct ?film_title ?actor_name ?director_name ?writer_name ?screen_writer ?music_composers ?producer_name ?length ?film_genres  where {
     ?film_title rdf:type <http://dbpedia.org/ontology/Film> .
     optional {?film_title dbo:starring ?actor.
             ?actor rdfs:label ?actor_name .
@@ -28,6 +27,9 @@ select distinct ?film_title ?actor_name ?director_name ?writer_name ?screen_writ
     optional {?film_title dbp:music ?soundtrack.
             ?soundtrack rdfs:label ?music_composers .
             FILTER(LANG(?music_composers) = "en")}
+    optional {?film_title dbo:producer ?producer.
+            ?producer rdfs:label ?producer_name .
+            FILTER(LANG(?producer_name) = "en")}
     optional {?film_title dbo:runtime ?length .}
     optional {?film_title dbp:genre ?film_genre.
             ?film_genre rdfs:label ?film_genres .
@@ -36,40 +38,30 @@ select distinct ?film_title ?actor_name ?director_name ?writer_name ?screen_writ
             ?actor rdfs:label ?actor_name .
             FILTER(LANG(?actor_name) = "en")}
 
-} group by ?film_title ?actor_name ?director_name ?writer_name ?screen_writer ?music_composers ?length ?film_genres
-OFFSET 0
+} group by ?film_title ?actor_name ?director_name ?writer_name ?screen_writer ?music_composers ?producer_name ?length ?film_genres
 """
+# Initialize variables for pagination
+offset = 0
+has_more_results = True
+movies_dict = {}
 
-# Define the headers
-headers = {
-    "Accept": "application/sparql-results+json"
-}
 
-# Define the parameters
-params = {
-    "query": query,
-    "format": "json"
-}
+while has_more_results:
+    # Modify the query with OFFSET clause
+    modified_query = query + f"\nLIMIT 10000\nOFFSET {offset}"
 
-MAX_RETRIES = 3
+    # Send request with modified query
+    params = {"query": modified_query, "format": "json", "timeout": 120000}
+    response = requests.get(endpoint, params=params, headers={"Accept": "application/sparql-results+json"})
 
-for retry in range(MAX_RETRIES):
-  try:
-    response = requests.get(endpoint, params=params, headers=headers)
-    # Process successful response
-    break  # Exit the loop on success
-  except requests.exceptions.RequestException as e:
-    print(f"Error during request, retrying: {retry+1}/{MAX_RETRIES}")
-    time.sleep(2)  # Wait for 2 seconds before retry
-
-if retry == MAX_RETRIES - 1:
-  print("Failed to retrieve data after retries.")
-
-# Check if the request was successful
-if response.status_code == 200 or response.status_code == 206:
+    # Check for errors
+    if response.status_code != 200 and response.status_code != 206:
+        print("Error:", response.status_code)
+        print(response.text)
+        break
+    
+    # Process response and build movie dictionary
     results = response.json()
-    movies_dict = {}
-
     for result in results["results"]["bindings"]:
         title = result.get("film_title", {}).get("value", "N/A")
 
@@ -82,6 +74,7 @@ if response.status_code == 200 or response.status_code == 206:
             movie["writers"] = []
             movie["screenwriters"] = []
             movie["soundtracks"] = []
+            movie["producers"] = []
             movie["genres"] = []
             movie["abstract"] = result.get("film_abstract", {}).get("value", "N/A")
 
@@ -115,6 +108,11 @@ if response.status_code == 200 or response.status_code == 206:
         if soundtrack not in movie["soundtracks"]:
             movie["soundtracks"].append(soundtrack)
 
+        # Add producer names
+        producer_name = result.get("producer_name", {}).get("value", "N/A")
+        if producer_name not in movie["producers"]:
+            movie["producers"].append(producer_name)
+
         # Add genre names
         genre = result.get("film_genres", {}).get("value", "N/A")
         if genre not in movie["genres"]:
@@ -131,9 +129,18 @@ if response.status_code == 200 or response.status_code == 206:
     # Convert the dictionary values to a list of movies
     movies = list(movies_dict.values())
 
-    # Write data to JSON file
-    with open("cinema.json", "w", encoding='utf-8') as json_file:
-        json.dump(movies, json_file, ensure_ascii=False, indent=4)
-else:
-    print("Error:", response.status_code)
-    print(response.text)
+    # Check for "next" link in headers (if applicable)
+    has_more_results = len(results["results"]["bindings"]) == 10000  # Check if fully retrieved
+    if 'Link' in response.headers:
+        links = response.headers['Link'].split(',')
+        for link in links:
+            if 'next' in link:
+                endpoint = link.split('>')[0].strip()[1:]  # Extract next URL
+                has_more_results = True  # Continue pagination with new endpoint
+                break
+
+    offset += 10000
+
+# Write all movie data to JSON file
+with open("cinema.json", "w", encoding='utf-8') as json_file:
+    json.dump(list(movies_dict.values()), json_file, ensure_ascii=False, indent=4)
