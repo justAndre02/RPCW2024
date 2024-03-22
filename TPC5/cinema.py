@@ -10,7 +10,7 @@ query = """
 PREFIX dbo: <http://dbpedia.org/ontology/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX dbp: <http://dbpedia.org/property/>
-select distinct ?film_title ?actor_name ?director_name ?writer_name ?screen_writer ?music_composers ?producer_name ?length ?film_genres  where {
+select distinct ?film_title ?actor_name ?director_name ?writer_name ?screen_writer ?music_composers ?producer_name ?length ?release_date ?film_genres  where {
     ?film_title rdf:type <http://dbpedia.org/ontology/Film> .
     optional {?film_title dbo:starring ?actor.
             ?actor rdfs:label ?actor_name .
@@ -31,6 +31,7 @@ select distinct ?film_title ?actor_name ?director_name ?writer_name ?screen_writ
             ?producer rdfs:label ?producer_name .
             FILTER(LANG(?producer_name) = "en")}
     optional {?film_title dbo:runtime ?length .}
+    optional {?film_title dbp:released ?release_date .}
     optional {?film_title dbp:genre ?film_genre.
             ?film_genre rdfs:label ?film_genres .
             FILTER(LANG(?film_genres) = "en")}
@@ -38,7 +39,7 @@ select distinct ?film_title ?actor_name ?director_name ?writer_name ?screen_writ
             ?actor rdfs:label ?actor_name .
             FILTER(LANG(?actor_name) = "en")}
 
-} group by ?film_title ?actor_name ?director_name ?writer_name ?screen_writer ?music_composers ?producer_name ?length ?film_genres
+} group by ?film_title ?actor_name ?director_name ?writer_name ?screen_writer ?music_composers ?producer_name ?length ?release_date ?film_genres
 """
 # Initialize variables for pagination
 offset = 0
@@ -48,7 +49,7 @@ movies_dict = {}
 
 while has_more_results:
     # Modify the query with OFFSET clause
-    modified_query = query + f"\nLIMIT 10000\nOFFSET {offset}"
+    modified_query = query + f"\nLIMIT 9000\nOFFSET {offset}"
 
     # Send request with modified query
     params = {"query": modified_query, "format": "json", "timeout": 120000}
@@ -57,7 +58,6 @@ while has_more_results:
     # Check for errors
     if response.status_code != 200 and response.status_code != 206:
         print("Error:", response.status_code)
-        print(response.text)
         break
     
     # Process response and build movie dictionary
@@ -126,11 +126,15 @@ while has_more_results:
         else:
             movie["type"] = "Feature-Length Film"
 
+        # Add release date
+        release_date = result.get("release_date", {}).get("value", "N/A")
+        movie["release_date"] = release_date
+
     # Convert the dictionary values to a list of movies
     movies = list(movies_dict.values())
 
     # Check for "next" link in headers (if applicable)
-    has_more_results = len(results["results"]["bindings"]) == 10000  # Check if fully retrieved
+    has_more_results = len(results["results"]["bindings"]) == 9000  # Check if fully retrieved
     if 'Link' in response.headers:
         links = response.headers['Link'].split(',')
         for link in links:
@@ -139,7 +143,7 @@ while has_more_results:
                 has_more_results = True  # Continue pagination with new endpoint
                 break
 
-    offset += 10000
+    offset += 9000
 
 # Write all movie data to JSON file
 with open("cinema.json", "w", encoding='utf-8') as json_file:

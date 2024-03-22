@@ -1,92 +1,92 @@
-@prefix : <http://www.semanticweb.org/andre/ontologies/2024/untitled-ontology-6/> .
+@prefix : <http://www.semanticweb.org/andre/ontologies/2024/cinema/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix xml: <http://www.w3.org/XML/1998/namespace> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@base <http://www.semanticweb.org/andre/ontologies/2024/untitled-ontology-6/> .
+@base <http://www.semanticweb.org/andre/ontologies/2024/cinema/> .
 
-<http://www.semanticweb.org/andre/ontologies/2024/untitled-ontology-6> rdf:type owl:Ontology .
+<http://www.semanticweb.org/andre/ontologies/2024/cinema> rdf:type owl:Ontology .
 
 #################################################################
 #    Object Properties
 #################################################################
 
-###  http://www.semanticweb.org/andre/ontologies/2024/untitled-ontology-6#acted
+###  http://www.semanticweb.org/andre/ontologies/2024/cinema/acted
 :acted rdf:type owl:ObjectProperty ;
        owl:inverseOf :hasActor .
 
 
-###  http://www.semanticweb.org/andre/ontologies/2024/untitled-ontology-6#composed
+###  http://www.semanticweb.org/andre/ontologies/2024/cinema/composed
 :composed rdf:type owl:ObjectProperty ;
           owl:inverseOf :hasComposer .
 
 
-###  http://www.semanticweb.org/andre/ontologies/2024/untitled-ontology-6#directed
+###  http://www.semanticweb.org/andre/ontologies/2024/cinema/directed
 :directed rdf:type owl:ObjectProperty ;
           owl:inverseOf :hasDirector .
 
 
-###  http://www.semanticweb.org/andre/ontologies/2024/untitled-ontology-6#hasActor
+###  http://www.semanticweb.org/andre/ontologies/2024/cinema/hasActor
 :hasActor rdf:type owl:ObjectProperty ;
           rdfs:domain :Film ;
           rdfs:range :Person .
 
 
-###  http://www.semanticweb.org/andre/ontologies/2024/untitled-ontology-6#hasComposer
+###  http://www.semanticweb.org/andre/ontologies/2024/cinema/hasComposer
 :hasComposer rdf:type owl:ObjectProperty ;
              rdfs:domain :Music ;
              rdfs:range :Person .
 
 
-###  http://www.semanticweb.org/andre/ontologies/2024/untitled-ontology-6#hasCountry
+###  http://www.semanticweb.org/andre/ontologies/2024/cinema/hasCountry
 :hasCountry rdf:type owl:ObjectProperty ;
             rdfs:domain :Film ;
             rdfs:range :Country .
 
 
-###  http://www.semanticweb.org/andre/ontologies/2024/untitled-ontology-6#hasDirector
+###  http://www.semanticweb.org/andre/ontologies/2024/cinema/hasDirector
 :hasDirector rdf:type owl:ObjectProperty ;
              rdfs:domain :Film ;
              rdfs:range :Person .
 
 
-###  http://www.semanticweb.org/andre/ontologies/2024/untitled-ontology-6#hasGenre
+###  http://www.semanticweb.org/andre/ontologies/2024/cinema/hasGenre
 :hasGenre rdf:type owl:ObjectProperty ;
           rdfs:domain :Film ;
           rdfs:range :Genre .
 
 
-###  http://www.semanticweb.org/andre/ontologies/2024/untitled-ontology-6#hasProducer
+###  http://www.semanticweb.org/andre/ontologies/2024/cinema/hasProducer
 :hasProducer rdf:type owl:ObjectProperty ;
              owl:inverseOf :produced ;
              rdfs:domain :Film ;
              rdfs:range :Person .
 
 
-###  http://www.semanticweb.org/andre/ontologies/2024/untitled-ontology-6#hasScreenwriter
+###  http://www.semanticweb.org/andre/ontologies/2024/cinema/hasScreenwriter
 :hasScreenwriter rdf:type owl:ObjectProperty ;
                  owl:inverseOf :screenwrited ;
                  rdfs:domain :Screenplay ;
                  rdfs:range :Person .
 
 
-###  http://www.semanticweb.org/andre/ontologies/2024/untitled-ontology-6#hasWriter
+###  http://www.semanticweb.org/andre/ontologies/2024/cinema/hasWriter
 :hasWriter rdf:type owl:ObjectProperty ;
            owl:inverseOf :wrote ;
            rdfs:domain :Book ;
            rdfs:range :Person .
 
 
-###  http://www.semanticweb.org/andre/ontologies/2024/untitled-ontology-6#produced
+###  http://www.semanticweb.org/andre/ontologies/2024/cinema/produced
 :produced rdf:type owl:ObjectProperty .
 
 
-###  http://www.semanticweb.org/andre/ontologies/2024/untitled-ontology-6#screenwrited
+###  http://www.semanticweb.org/andre/ontologies/2024/cinema/screenwrited
 :screenwrited rdf:type owl:ObjectProperty .
 
 
-###  http://www.semanticweb.org/andre/ontologies/2024/untitled-ontology-6#wrote
+###  http://www.semanticweb.org/andre/ontologies/2024/cinema/wrote
 :wrote rdf:type owl:ObjectProperty .
 
 
@@ -94,27 +94,27 @@
 #    Data properties
 #################################################################
 
-###  http://www.semanticweb.org/andre/ontologies/2024/untitled-ontology-6#birthDate
+###  http://www.semanticweb.org/andre/ontologies/2024/cinema/birthDate
 :birthDate rdf:type owl:DatatypeProperty .
 
 
-###  http://www.semanticweb.org/andre/ontologies/2024/untitled-ontology-6#date
+###  http://www.semanticweb.org/andre/ontologies/2024/cinema/date
 :date rdf:type owl:DatatypeProperty .
 
 
-###  http://www.semanticweb.org/andre/ontologies/2024/untitled-ontology-6#description
+###  http://www.semanticweb.org/andre/ontologies/2024/cinema/description
 :description rdf:type owl:DatatypeProperty .
 
 
-###  http://www.semanticweb.org/andre/ontologies/2024/untitled-ontology-6#duration
+###  http://www.semanticweb.org/andre/ontologies/2024/cinema/duration
 :duration rdf:type owl:DatatypeProperty .
 
 
-###  http://www.semanticweb.org/andre/ontologies/2024/untitled-ontology-6#name
+###  http://www.semanticweb.org/andre/ontologies/2024/cinema/name
 :name rdf:type owl:DatatypeProperty .
 
 
-###  http://www.semanticweb.org/andre/ontologies/2024/untitled-ontology-6#title
+###  http://www.semanticweb.org/andre/ontologies/2024/cinema/title
 :title rdf:type owl:DatatypeProperty .
 
 
@@ -122,7 +122,19 @@
 #    Classes
 #################################################################
 
-###  http://www.semanticweb.org/andre/ontologies/2024/untitled-ontology-6#Actor
+###  http://www.semanticweb.org/andre/ontologies/2024/cinema#Writer
+:Writer rdf:type owl:Class ;
+        owl:equivalentClass [ owl:intersectionOf ( :Person
+                                                   [ rdf:type owl:Restriction ;
+                                                     owl:onProperty :wrote ;
+                                                     owl:someValuesFrom :Film
+                                                   ]
+                                                 ) ;
+                              rdf:type owl:Class
+                            ] .
+
+
+###  http://www.semanticweb.org/andre/ontologies/2024/cinema/Actor
 :Actor rdf:type owl:Class ;
        owl:equivalentClass [ owl:intersectionOf ( :Person
                                                   [ rdf:type owl:Restriction ;
@@ -134,16 +146,16 @@
                            ] .
 
 
-###  http://www.semanticweb.org/andre/ontologies/2024/untitled-ontology-6#Artwork
+###  http://www.semanticweb.org/andre/ontologies/2024/cinema/Artwork
 :Artwork rdf:type owl:Class .
 
 
-###  http://www.semanticweb.org/andre/ontologies/2024/untitled-ontology-6#Book
+###  http://www.semanticweb.org/andre/ontologies/2024/cinema/Book
 :Book rdf:type owl:Class ;
       rdfs:subClassOf :Artwork .
 
 
-###  http://www.semanticweb.org/andre/ontologies/2024/untitled-ontology-6#Country
+###  http://www.semanticweb.org/andre/ontologies/2024/cinema/Country
 :Country rdf:type owl:Class ;
          owl:equivalentClass [ rdf:type owl:Class ;
                                owl:oneOf ( :France
@@ -153,7 +165,7 @@
                              ] .
 
 
-###  http://www.semanticweb.org/andre/ontologies/2024/untitled-ontology-6#Director
+###  http://www.semanticweb.org/andre/ontologies/2024/cinema/Director
 :Director rdf:type owl:Class ;
           owl:equivalentClass [ owl:intersectionOf ( :Person
                                                      [ rdf:type owl:Restriction ;
@@ -165,20 +177,20 @@
                               ] .
 
 
-###  http://www.semanticweb.org/andre/ontologies/2024/untitled-ontology-6#Film
+###  http://www.semanticweb.org/andre/ontologies/2024/cinema/Film
 :Film rdf:type owl:Class .
 
 
-###  http://www.semanticweb.org/andre/ontologies/2024/untitled-ontology-6#Genre
+###  http://www.semanticweb.org/andre/ontologies/2024/cinema/Genre
 :Genre rdf:type owl:Class .
 
 
-###  http://www.semanticweb.org/andre/ontologies/2024/untitled-ontology-6#Music
+###  http://www.semanticweb.org/andre/ontologies/2024/cinema/Music
 :Music rdf:type owl:Class ;
        rdfs:subClassOf :Artwork .
 
 
-###  http://www.semanticweb.org/andre/ontologies/2024/untitled-ontology-6#Musician
+###  http://www.semanticweb.org/andre/ontologies/2024/cinema/Musician
 :Musician rdf:type owl:Class ;
           owl:equivalentClass [ owl:intersectionOf ( :Person
                                                      [ rdf:type owl:Restriction ;
@@ -190,11 +202,11 @@
                               ] .
 
 
-###  http://www.semanticweb.org/andre/ontologies/2024/untitled-ontology-6#Person
+###  http://www.semanticweb.org/andre/ontologies/2024/cinema/Person
 :Person rdf:type owl:Class .
 
 
-###  http://www.semanticweb.org/andre/ontologies/2024/untitled-ontology-6#Producer
+###  http://www.semanticweb.org/andre/ontologies/2024/cinema/Producer
 :Producer rdf:type owl:Class ;
           owl:equivalentClass [ owl:intersectionOf ( :Person
                                                      [ rdf:type owl:Restriction ;
@@ -206,12 +218,12 @@
                               ] .
 
 
-###  http://www.semanticweb.org/andre/ontologies/2024/untitled-ontology-6#Screenplay
+###  http://www.semanticweb.org/andre/ontologies/2024/cinema/Screenplay
 :Screenplay rdf:type owl:Class ;
             rdfs:subClassOf :Artwork .
 
 
-###  http://www.semanticweb.org/andre/ontologies/2024/untitled-ontology-6#Screenwitrer
+###  http://www.semanticweb.org/andre/ontologies/2024/cinema/Screenwitrer
 :Screenwitrer rdf:type owl:Class ;
               owl:equivalentClass [ owl:intersectionOf ( :Person
                                                          [ rdf:type owl:Restriction ;
@@ -227,29 +239,29 @@
 #    Individuals
 #################################################################
 
-###  http://www.semanticweb.org/andre/ontologies/2024/untitled-ontology-6#France
+###  http://www.semanticweb.org/andre/ontologies/2024/cinema/France
 :France rdf:type owl:NamedIndividual ,
                  :Country .
 
 
-###  http://www.semanticweb.org/andre/ontologies/2024/untitled-ontology-6#NikolaySimonov
+###  http://www.semanticweb.org/andre/ontologies/2024/cinema/NikolaySimonov
 :NikolaySimonov rdf:type owl:NamedIndividual ,
                          :Person ;
                 :name "Nikolay Simonov" .
 
 
-###  http://www.semanticweb.org/andre/ontologies/2024/untitled-ontology-6#Russia
+###  http://www.semanticweb.org/andre/ontologies/2024/cinema/Russia
 :Russia rdf:type owl:NamedIndividual ,
                  :Country .
 
 
-###  http://www.semanticweb.org/andre/ontologies/2024/untitled-ontology-6#SergeiVasilyev
+###  http://www.semanticweb.org/andre/ontologies/2024/cinema/SergeiVasilyev
 :SergeiVasilyev rdf:type owl:NamedIndividual ,
                          :Person ;
                 :birthDate "Sergei Vasyliev" .
 
 
-###  http://www.semanticweb.org/andre/ontologies/2024/untitled-ontology-6#TheSleepingBeauty
+###  http://www.semanticweb.org/andre/ontologies/2024/cinema/TheSleepingBeauty
 :TheSleepingBeauty rdf:type owl:NamedIndividual ,
                             :Film ;
                    :hasActor :NikolaySimonov ,
@@ -257,24 +269,25 @@
                    :hasCountry :Russia ;
                    :hasDirector :SergeiVasilyev ;
                    :hasScreenwriter :YevgeniShneidr ;
+                   :date "1930" ;
                    :description "This a soviet film  from 1930..." ;
                    :duration 76 ;
                    :title "The Sleeping Beauty" .
 
 
-###  http://www.semanticweb.org/andre/ontologies/2024/untitled-ontology-6#USA
+###  http://www.semanticweb.org/andre/ontologies/2024/cinema/USA
 :USA rdf:type owl:NamedIndividual ,
               :Country .
 
 
-###  http://www.semanticweb.org/andre/ontologies/2024/untitled-ontology-6#VarvaraMyasnikova
+###  http://www.semanticweb.org/andre/ontologies/2024/cinema/VarvaraMyasnikova
 :VarvaraMyasnikova rdf:type owl:NamedIndividual ,
                             :Person ;
                    :birthDate "1900-09-22" ;
                    :name "Varavara Myasnikova" .
 
 
-###  http://www.semanticweb.org/andre/ontologies/2024/untitled-ontology-6#YevgeniShneidr
+###  http://www.semanticweb.org/andre/ontologies/2024/cinema/YevgeniShneidr
 :YevgeniShneidr rdf:type owl:NamedIndividual ,
                          :Person ;
                 :name "Yevgeni Shneidr" .

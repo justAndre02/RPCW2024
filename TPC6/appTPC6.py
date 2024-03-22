@@ -284,6 +284,12 @@ for film in data:
 
     g.add((film_uri, cinema.duration, Literal(length_str)))
 
+    release_date = film['release_date']
+    if release_date == "N/A":
+        g.add((film_uri, cinema.date, Literal("N/A")))
+    else:
+        g.add((film_uri, cinema.date, Literal(release_date)))
+
 print(len(g))
 with open('andre_pg54707.ttl', 'wb') as f:
     f.write(g.serialize().encode('utf-8'))

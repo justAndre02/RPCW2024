@@ -28,14 +28,39 @@ André Freitas (PG54707)
 
 
 ## Respostas às perguntas
-#### 1 - Quantos filmes existem no repositório?
+### 1 - Quantos filmes existem no repositório?
+##### SPARQL Query
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 
-#### 2 - Qual a distribuição de filmes por ano de lançamento?
+SELECT (COUNT(?film_title) AS ?numFilmes)WHERE {
+&emsp;?film_title rdf:type <http://www.semanticweb.org/andre/ontologies/2024/cinema/Film> .
+}
+##### Resposta
+61746
 
-#### 3 - Qual a distribuição de filmes por género?
+### 2 - Qual a distribuição de filmes por ano de lançamento?
+##### SPARQL Query
 
-#### 4 - Em que filmes participou o ator "Burt Reynolds"?
+##### Resposta
 
-#### 5 - Produz uma lista de realizadores com o seu nome e número de filmes que realizou.
 
-#### 6 - Qual o título dos livros que aparecem associados aos filmes?
+### 3 - Qual a distribuição de filmes por género?
+##### SPARQL Query
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX ont: <http://www.semanticweb.org/andre/ontologies/2024/cinema/>
+
+SELECT ?genre (COUNT(?film) AS ?numFilmes) WHERE {
+    ?film rdf:type ont:Film .
+    ?film ont:hasGenre ?genre .
+}
+GROUP BY ?genre
+ORDER BY DESC(?numFilmes)
+
+##### Resposta
+
+
+### 4 - Em que filmes participou o ator "Burt Reynolds"?
+
+### 5 - Produz uma lista de realizadores com o seu nome e número de filmes que realizou.
+
+### 6 - Qual o título dos livros que aparecem associados aos filmes?
