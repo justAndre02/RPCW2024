@@ -25,7 +25,7 @@ André Freitas (PG54707)
 [andre_pg54707.ttl](andre_pg54707.ttl)
 
 #### Interface web do repositório de filmes
-
+[app.py](/TPC6/app_cinema/app.py)
 
 ## Respostas às perguntas
 ### 1 - Quantos filmes existem no repositório?
@@ -36,7 +36,7 @@ SELECT (COUNT(?film_title) AS ?numFilmes)WHERE {
 &emsp;?film_title rdf:type <http://www.semanticweb.org/andre/ontologies/2024/cinema/Film> .
 }
 ##### Resposta
-61746
+57320
 
 ### 2 - Qual a distribuição de filmes por ano de lançamento?
 ##### SPARQL Query
@@ -50,13 +50,12 @@ PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX ont: <http://www.semanticweb.org/andre/ontologies/2024/cinema/>
 
 SELECT ?genre (COUNT(?film) AS ?numFilmes) WHERE {
-    ?film rdf:type ont:Film .
-    ?film ont:hasGenre ?genre .
+&emsp;?film rdf:type ont:Film .
+&emsp;?film ont:hasGenre ?genre .
 }
 GROUP BY ?genre
 ORDER BY DESC(?numFilmes)
 
-##### Resposta
 
 
 ### 4 - Em que filmes participou o ator "Burt Reynolds"?

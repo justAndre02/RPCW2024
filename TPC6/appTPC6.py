@@ -10,7 +10,7 @@ with open('cinema.json', 'r', encoding='utf-8') as file:
     data = json.load(file)
 file.close()
 
-cinema = Namespace("http://www.semanticweb.org/andre/ontologies/2024/untitled-ontology-6/")
+cinema = Namespace("http://www.semanticweb.org/andre/ontologies/2024/cinema/")
 # Assuming 'data' is a list of dictionaries where each dictionary represents a film
 for film in data:
     film_uri = URIRef(f"""{cinema}{film['title'].replace(' ', '_').replace('%28', '(').replace('%29', ')')
@@ -284,11 +284,11 @@ for film in data:
 
     g.add((film_uri, cinema.duration, Literal(length_str)))
 
-    release_date = film['release_date']
-    if release_date == "N/A":
-        g.add((film_uri, cinema.date, Literal("N/A")))
-    else:
-        g.add((film_uri, cinema.date, Literal(release_date)))
+    for release_date in film['releases']:
+        if release_date == "N/A":
+            g.add((film_uri, cinema.date, Literal("N/A")))
+        else:
+            g.add((film_uri, cinema.date, Literal(release_date)))
 
 print(len(g))
 with open('andre_pg54707.ttl', 'wb') as f:

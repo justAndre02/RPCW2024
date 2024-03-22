@@ -31,7 +31,7 @@ select distinct ?film_title ?actor_name ?director_name ?writer_name ?screen_writ
             ?producer rdfs:label ?producer_name .
             FILTER(LANG(?producer_name) = "en")}
     optional {?film_title dbo:runtime ?length .}
-    optional {?film_title dbp:released ?release_date .}
+    optional {?film_title dbo:releaseDate ?release_date .}
     optional {?film_title dbp:genre ?film_genre.
             ?film_genre rdfs:label ?film_genres .
             FILTER(LANG(?film_genres) = "en")}
@@ -76,6 +76,7 @@ while has_more_results:
             movie["soundtracks"] = []
             movie["producers"] = []
             movie["genres"] = []
+            movie["releases"] = []
             movie["abstract"] = result.get("film_abstract", {}).get("value", "N/A")
 
             movies_dict[title] = movie
@@ -127,8 +128,10 @@ while has_more_results:
             movie["type"] = "Feature-Length Film"
 
         # Add release date
-        release_date = result.get("release_date", {}).get("value", "N/A")
-        movie["release_date"] = release_date
+        # Add genre names
+        releasedate = result.get("release_date", {}).get("value", "N/A")
+        if releasedate not in movie["releases"]:
+            movie["releases"].append(releasedate)
 
     # Convert the dictionary values to a list of movies
     movies = list(movies_dict.values())
