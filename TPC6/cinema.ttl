@@ -12,6 +12,12 @@
 #    Object Properties
 #################################################################
 
+###  http://www.semanticweb.org/andre/ontologies/2024/cinema#basedOf
+:basedOf rdf:type owl:ObjectProperty ;
+         rdfs:domain :Film ;
+         rdfs:range :Book .
+
+
 ###  http://www.semanticweb.org/andre/ontologies/2024/cinema/acted
 :acted rdf:type owl:ObjectProperty ;
        owl:inverseOf :hasActor .
@@ -122,18 +128,6 @@
 #    Classes
 #################################################################
 
-###  http://www.semanticweb.org/andre/ontologies/2024/cinema#Writer
-:Writer rdf:type owl:Class ;
-        owl:equivalentClass [ owl:intersectionOf ( :Person
-                                                   [ rdf:type owl:Restriction ;
-                                                     owl:onProperty :wrote ;
-                                                     owl:someValuesFrom :Film
-                                                   ]
-                                                 ) ;
-                              rdf:type owl:Class
-                            ] .
-
-
 ###  http://www.semanticweb.org/andre/ontologies/2024/cinema/Actor
 :Actor rdf:type owl:Class ;
        owl:equivalentClass [ owl:intersectionOf ( :Person
@@ -235,9 +229,27 @@
                                   ] .
 
 
+###  http://www.semanticweb.org/andre/ontologies/2024/cinema/Writer
+:Writer rdf:type owl:Class ;
+        owl:equivalentClass [ owl:intersectionOf ( :Person
+                                                   [ rdf:type owl:Restriction ;
+                                                     owl:onProperty :wrote ;
+                                                     owl:someValuesFrom :Film
+                                                   ]
+                                                 ) ;
+                              rdf:type owl:Class
+                            ] .
+
+
 #################################################################
 #    Individuals
 #################################################################
+
+###  http://www.semanticweb.org/andre/ontologies/2024/cinema/SleepingBeauty
+:SleepingBeauty rdf:type owl:NamedIndividual ,
+                         :Book ;
+                :title "SleepingBeauty" .
+
 
 ###  http://www.semanticweb.org/andre/ontologies/2024/cinema/France
 :France rdf:type owl:NamedIndividual ,
@@ -264,6 +276,7 @@
 ###  http://www.semanticweb.org/andre/ontologies/2024/cinema/TheSleepingBeauty
 :TheSleepingBeauty rdf:type owl:NamedIndividual ,
                             :Film ;
+                   :basedOf :SleepingBeauty ;
                    :hasActor :NikolaySimonov ,
                              :VarvaraMyasnikova ;
                    :hasCountry :Russia ;

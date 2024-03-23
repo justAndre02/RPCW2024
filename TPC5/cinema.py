@@ -10,8 +10,11 @@ query = """
 PREFIX dbo: <http://dbpedia.org/ontology/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX dbp: <http://dbpedia.org/property/>
-select distinct ?film_title ?actor_name ?director_name ?writer_name ?screen_writer ?music_composers ?producer_name ?length ?release_date ?film_genres  where {
+select distinct ?film_title ?book_name ?actor_name ?director_name ?writer_name ?screen_writer ?music_composers ?producer_name ?length ?release_date ?film_genres  where {
     ?film_title rdf:type <http://dbpedia.org/ontology/Film> .
+    optional {?film_title dbo:basedOn ?book.
+            ?book rdfs:label ?book_name .
+            FILTER(LANG(?book_name) = "en")}
     optional {?film_title dbo:starring ?actor.
             ?actor rdfs:label ?actor_name .
             FILTER(LANG(?actor_name) = "en")}
@@ -39,7 +42,7 @@ select distinct ?film_title ?actor_name ?director_name ?writer_name ?screen_writ
             ?actor rdfs:label ?actor_name .
             FILTER(LANG(?actor_name) = "en")}
 
-} group by ?film_title ?actor_name ?director_name ?writer_name ?screen_writer ?music_composers ?producer_name ?length ?release_date ?film_genres
+} group by ?film_title ?book_name ?actor_name ?director_name ?writer_name ?screen_writer ?music_composers ?producer_name ?length ?release_date ?film_genres
 """
 # Initialize variables for pagination
 offset = 0
@@ -49,7 +52,7 @@ movies_dict = {}
 
 while has_more_results:
     # Modify the query with OFFSET clause
-    modified_query = query + f"\nLIMIT 9000\nOFFSET {offset}"
+    modified_query = query + f"\nLIMIT 9999\nOFFSET {offset}"
 
     # Send request with modified query
     params = {"query": modified_query, "format": "json", "timeout": 120000}
@@ -69,6 +72,7 @@ while has_more_results:
         if title not in movies_dict:
             movie = {}
             movie["title"] = title
+            movie["books"] = []
             movie["actors"] = []
             movie["directors"] = []
             movie["writers"] = []
@@ -82,6 +86,12 @@ while has_more_results:
             movies_dict[title] = movie
 
         movie = movies_dict[title]
+
+        # Add book names
+        book_name = result.get("book_name", {}).get("value", "N/A")
+        if book_name not in movie["books"]:
+            movie["books"].append(book_name)
+
 
         # Add actor names if not already present in the movie
         actor_name = result.get("actor_name", {}).get("value", "N/A")
@@ -137,7 +147,7 @@ while has_more_results:
     movies = list(movies_dict.values())
 
     # Check for "next" link in headers (if applicable)
-    has_more_results = len(results["results"]["bindings"]) == 9000  # Check if fully retrieved
+    has_more_results = len(results["results"]["bindings"]) == 9999  # Check if fully retrieved
     if 'Link' in response.headers:
         links = response.headers['Link'].split(',')
         for link in links:
@@ -146,7 +156,7 @@ while has_more_results:
                 has_more_results = True  # Continue pagination with new endpoint
                 break
 
-    offset += 9000
+    offset += 9999
 
 # Write all movie data to JSON file
 with open("cinema.json", "w", encoding='utf-8') as json_file:

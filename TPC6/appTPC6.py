@@ -39,6 +39,39 @@ for film in data:
 
     # ...
 
+    for book in film['books']:
+        book_name = book.replace(' ', '_')
+        book_name = quote(book_name)
+        book_name = (book_name.replace(' ', '_').replace('%28', '(').replace('%29', ')')
+                                 .replace('%3F', '?').replace('%27', "'").replace('%3A', ':').replace('%26', '&').replace('%C3%B3', 'ó')
+                                 .replace('%C3%A9', 'é').replace('%C3%A1', 'á').replace('%C3%AD', 'í').replace('%C3%B1', 'ñ').replace('%C3%BA', 'ú')
+                                 .replace('%C3%BC', 'ü').replace('%C3%BB', 'û').replace('%C3%AE', 'î').replace('%C3%AA', 'ê').replace('%C3%AE', 'î')
+                                 .replace('%C3%B6', 'ö').replace('%C3%A7', 'ç').replace('%C3%A0', 'à').replace('%C3%A8', 'è').replace('%C3%B2', 'ò')
+                                 .replace('%C3%B9', 'ù').replace('%C3%B8', 'ø').replace('%C3%B4', 'ô').replace('%C3%B5', 'õ').replace('%C3%A3', 'ã')
+                                 .replace('%C3%A2', 'â').replace('%C3%AE', 'î').replace('%C3%AF', 'ï').replace('%C3%AB', 'ë').replace('%C3%A3', 'ã')
+                                 .replace('%C3%A4', 'ä').replace('%C3%A5', 'å').replace('%C3%A6', 'æ').replace('%C3%BD', 'ý').replace('%C3%BD', 'ý')
+                                 .replace('%C3%B7', '÷').replace('%C3%97', '×').replace('%C3%9F', 'ß').replace('%C3%9E', 'Þ').replace('%C3%9C', 'Ü')
+                                 .replace('%22', "'").replace('%2C', ',').replace('%2E', '.').replace('%2F', '/').replace('%3A', ':').replace('%3B', ';')
+                                 .replace('%21', '!').replace('%C3%B0', 'ð').replace('%3C', '<').replace('%E2%80%99', '’').replace('%C4%A3', 'ģ').replace('%E2%80%93', '–')
+                                 .replace('%C8%9B', 'ș').replace('%C8%9A', 'Ț').replace('%C8%99', 'ș').replace('%C8%98', 'Ș').replace('%C3%87', 'Ç').replace('%C3%86', 'Æ')
+                                 .replace('%C3%85', 'Å').replace('%C3%84', 'Ä').replace('%C3%83', 'Ã').replace('%C3%82', 'Â').replace('%C3%81', 'Á').replace('%C3%80', 'À')
+                                 .replace('%C3%9F', 'ß').replace('%C3%9E', 'Þ').replace('%C3%9C', 'Ü').replace('%C3%9B', 'Û').replace('%C3%9A', 'Ú').replace('%C3%99', 'Ù')
+                                 .replace('%C3%98', 'Ø').replace('%C3%97', '×').replace('%C3%96', 'Ö').replace('%C3%95', 'Õ').replace('%C3%94', 'Ô').replace('%C3%93', 'Ó')
+                                 .replace('%C3%92', 'Ò').replace('%C3%91', 'Ñ').replace('%C3%90', 'Ð').replace('%C3%8F', 'Ï').replace('%C3%8E', 'Î').replace('%C3%8D', 'Í')
+                                 .replace('%C4%83', 'ă').replace('%C4%82', 'Ă').replace('%C4%9B', 'ě').replace('%C4%9A', 'Ě').replace('%C4%9D', 'ĝ').replace('%C4%9C', 'Ĝ')
+                                 .replace('%C4%9F', 'ğ').replace('%C4%9E', 'Ğ').replace('%C4%A5', 'ĥ').replace('%C4%A4', 'Ĥ').replace('%C4%A9', 'ĩ').replace('%C4%A8', 'Ĩ')
+                                 .replace('%C4%AF', 'į').replace('%C4%AE', 'Į').replace('%C4%B3', 'ĳ').replace('%C4%B2', 'Ĳ').replace('%C5%84', 'ń').replace('%C5%83', 'Ń')
+                                 .replace('%C4%87', 'ć').replace('%C4%86', 'Ć').replace('%C4%8D', 'č').replace('%C4%8C', 'Č').replace('%C4%8F', 'ď').replace('%C4%8E', 'Ď')
+                                 .replace('%C4%91', 'đ').replace('%C4%90', 'Đ').replace('%C4%97', 'ė').replace('%C4%96', 'Ė').replace('%C5%8D', 'ō').replace('%C5%8C', 'Ō')
+                                 .replace('%C5%82', 'ł').replace('%C3%89', 'É').replace('%C5%84', 'ń').replace('%C5%83', 'Ń').replace('%C5%88', 'ň').replace('%C5%87', 'Ň')
+                                 .replace('%C5%A1', 'š').replace('%C5%A0', 'Š').replace('%C5%A5', 'ť').replace('%C5%A4', 'Ť').replace('%C5%AF', 'ů').replace('%C5%AE', 'Ů'))
+        if book_name == "N/A":
+            book_uri = Literal("N/A")
+        else:
+            book_uri = URIRef(f"{cinema}{book_name}")
+            g.add((book_uri, RDF.type, cinema.Book))
+            g.add((film_uri, cinema.basedOf, book_uri))
+
     for actor in film['actors']:
         actor_name = actor['name'].replace(' ', '_')
         actor_name = quote(actor_name)

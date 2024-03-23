@@ -35,14 +35,17 @@ PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 SELECT (COUNT(?film_title) AS ?numFilmes)WHERE {
 &emsp;?film_title rdf:type <http://www.semanticweb.org/andre/ontologies/2024/cinema/Film> .
 }
-##### Resposta
-57320
 
 ### 2 - Qual a distribuição de filmes por ano de lançamento?
 ##### SPARQL Query
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX ont: <http://www.semanticweb.org/andre/ontologies/2024/cinema/>
 
-##### Resposta
-
+SELECT ?release ?film WHERE {
+&emsp;?film rdf:type ont:Film .
+&emsp;?film ont:date ?release .
+}
+ORDER BY ?release
 
 ### 3 - Qual a distribuição de filmes por género?
 ##### SPARQL Query
@@ -56,10 +59,31 @@ SELECT ?genre (COUNT(?film) AS ?numFilmes) WHERE {
 GROUP BY ?genre
 ORDER BY DESC(?numFilmes)
 
-
-
 ### 4 - Em que filmes participou o ator "Burt Reynolds"?
+##### SPARQL Query
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX ont: <http://www.semanticweb.org/andre/ontologies/2024/cinema/>
+
+SELECT ?film_title WHERE {
+&emsp;?film_title rdf:type ont:Film .
+&emsp;?film_title ont:hasActor ont:Burt_Reynolds .
+}
 
 ### 5 - Produz uma lista de realizadores com o seu nome e número de filmes que realizou.
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX ont: <http://www.semanticweb.org/andre/ontologies/2024/cinema/>
+
+SELECT ?director (COUNT(?film) AS ?numFilmes) WHERE {
+&emsp;?film rdf:type ont:Film .
+&emsp;?film ont:hasDirector ?director .
+}
+GROUP BY ?director
 
 ### 6 - Qual o título dos livros que aparecem associados aos filmes?
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX ont: <http://www.semanticweb.org/andre/ontologies/2024/cinema/>
+
+SELECT ?film ?book WHERE {
+&emsp;?film rdf:type ont:Film .
+&emsp;?film ont:basedOf ?book .
+}
