@@ -19,8 +19,8 @@ def index():
 def elementos():
     sparql_query = '''
 prefix tp: <http://www.daml.org/2003/01/periodictable/PeriodicTable#>
-select ?nome ?simbolo ?numero_atomico ?grupo where {
-    ?s a tp:Element ;
+select ?nome ?data ?duracao  where {
+    ?s a tp:Film ;
        tp:name ?nome ;
        tp:symbol ?simbolo ;
        tp:atomicNumber ?numero_atomico ;

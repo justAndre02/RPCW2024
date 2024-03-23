@@ -12,15 +12,15 @@
 #    Object Properties
 #################################################################
 
-###  http://www.semanticweb.org/andre/ontologies/2024/cinema#basedOf
-:basedOf rdf:type owl:ObjectProperty ;
-         rdfs:domain :Film ;
-         rdfs:range :Book .
-
-
 ###  http://www.semanticweb.org/andre/ontologies/2024/cinema/acted
 :acted rdf:type owl:ObjectProperty ;
        owl:inverseOf :hasActor .
+
+
+###  http://www.semanticweb.org/andre/ontologies/2024/cinema/basedOf
+:basedOf rdf:type owl:ObjectProperty ;
+         rdfs:domain :Film ;
+         rdfs:range :Book .
 
 
 ###  http://www.semanticweb.org/andre/ontologies/2024/cinema/composed
@@ -100,6 +100,14 @@
 #    Data properties
 #################################################################
 
+###  http://www.semanticweb.org/andre/ontologies/2024/cinema#book_title
+:book_title rdf:type owl:DatatypeProperty .
+
+
+###  http://www.semanticweb.org/andre/ontologies/2024/cinema#movie_title
+:movie_title rdf:type owl:DatatypeProperty .
+
+
 ###  http://www.semanticweb.org/andre/ontologies/2024/cinema/birthDate
 :birthDate rdf:type owl:DatatypeProperty .
 
@@ -118,10 +126,6 @@
 
 ###  http://www.semanticweb.org/andre/ontologies/2024/cinema/name
 :name rdf:type owl:DatatypeProperty .
-
-
-###  http://www.semanticweb.org/andre/ontologies/2024/cinema/title
-:title rdf:type owl:DatatypeProperty .
 
 
 #################################################################
@@ -217,8 +221,8 @@
             rdfs:subClassOf :Artwork .
 
 
-###  http://www.semanticweb.org/andre/ontologies/2024/cinema/Screenwitrer
-:Screenwitrer rdf:type owl:Class ;
+###  http://www.semanticweb.org/andre/ontologies/2024/cinema/Screenwriter
+:Screenwriter rdf:type owl:Class ;
               owl:equivalentClass [ owl:intersectionOf ( :Person
                                                          [ rdf:type owl:Restriction ;
                                                            owl:onProperty :screenwrited ;
@@ -245,12 +249,6 @@
 #    Individuals
 #################################################################
 
-###  http://www.semanticweb.org/andre/ontologies/2024/cinema/SleepingBeauty
-:SleepingBeauty rdf:type owl:NamedIndividual ,
-                         :Book ;
-                :title "SleepingBeauty" .
-
-
 ###  http://www.semanticweb.org/andre/ontologies/2024/cinema/France
 :France rdf:type owl:NamedIndividual ,
                  :Country .
@@ -273,6 +271,12 @@
                 :birthDate "Sergei Vasyliev" .
 
 
+###  http://www.semanticweb.org/andre/ontologies/2024/cinema/SleepingBeauty
+:SleepingBeauty rdf:type owl:NamedIndividual ,
+                         :Book ;
+                :book_title "Sleeping Beauty" .
+
+
 ###  http://www.semanticweb.org/andre/ontologies/2024/cinema/TheSleepingBeauty
 :TheSleepingBeauty rdf:type owl:NamedIndividual ,
                             :Film ;
@@ -282,10 +286,10 @@
                    :hasCountry :Russia ;
                    :hasDirector :SergeiVasilyev ;
                    :hasScreenwriter :YevgeniShneidr ;
+                   :movie_title "The Sleeping Beauty" ;
                    :date "1930" ;
                    :description "This a soviet film  from 1930..." ;
-                   :duration 76 ;
-                   :title "The Sleeping Beauty" .
+                   :duration 76 .
 
 
 ###  http://www.semanticweb.org/andre/ontologies/2024/cinema/USA
