@@ -19,12 +19,10 @@ def index():
 def filmes():
     sparql_query = '''
 prefix tp: <http://www.semanticweb.org/andre/ontologies/2024/cinema/>
-select ?s ?duracao ?data where {
+select ?titulo where {
     ?s a tp:Film ;
-       tp:duration ?duracao ;
-       tp:date ?data .
+       tp:movie_title ?titulo .
 }
-order by (?nome)
 '''
     resposta = requests.get(graphdb_endpoint, params={ 'query': sparql_query }, headers={ 'Accept': 'application/sparql-results+json' })
     if resposta.status_code == 200:
@@ -36,28 +34,48 @@ order by (?nome)
 @app.route('/filmes/<nome>')
 def filme(nome):
     sparql_query = f'''
-PREFIX tp: <http://www.semanticweb.org/andre/ontologies/2024/cinema/>
-select ?nome ?duracao ?data ?atores ?realizadores ?produtores ?escritores ?argumentistas ?compositores ?genero ?book where {{
-    ?s a tp:Film .
-    ?s tp:movie_title "{nome}" .
-         optional {{?s tp:duration ?duracao .}}
-         optional {{?s tp:date ?data .}}
-         optional {{?s tp:hasActor ?atores .}}
-         optional {{?s tp:hasDirector ?realizadores .}}
-         optional {{?s tp:hasProducer ?produtores .}}
-         optional {{?s tp:hasWriter ?escritores .}}
-         optional {{?s tp:hasScreenwriter ?argumentistas .}}
-         optional {{?s tp:hasComposer ?compositores .}}
-         optional {{?s tp:hasGenre ?genero .}}
-         optional {{?s tp:basedOf ?book .}}
-}}
-'''
-    resposta = requests.get(graphdb_endpoint, params={ 'query': sparql_query }, headers={ 'Accept': 'application/sparql-results+json' })
-    if resposta.status_code == 200:
+    PREFIX tp: <http://www.semanticweb.org/andre/ontologies/2024/cinema/>
+    select ?nome ?duracao ?data ?atores ?realizadores ?produtores ?escritores ?argumentistas ?compositores ?generos ?books where {{
+        ?s a tp:Film .
+        ?s tp:movie_title "{nome}" .
+             optional {{?s tp:duration ?duracao .}}
+             optional {{?s tp:date ?data .}}
+             optional {{?s tp:hasActor ?atores .}}
+             optional {{?s tp:hasDirector ?realizadores .}}
+             optional {{?s tp:hasProducer ?produtores .}}
+             optional {{?s tp:hasWriter ?escritores .}}
+             optional {{?s tp:hasScreenwriter ?argumentistas .}}
+             optional {{?s tp:hasComposer ?compositores .}}
+             optional {{?s tp:hasGenre ?generos .}}
+             optional {{?s tp:basedOf ?books .}}
+    }}
+    '''
+    resposta = requests.get(graphdb_endpoint, params={'query': sparql_query}, headers={'Accept': 'application/sparql-results+json'})
+    if resposta.status_code == 200 or resposta.status_code == 304:
         dados = resposta.json()['results']['bindings']
-        return render_template('filme.html', data = dados)
+        
+        # Extracting data for easier access in the template
+        filme_data = {
+            'nome': nome,
+            'duracao': list(set(item['duracao']['value'] for item in dados if 'duracao' in item)),
+            'data': list(set(item['data']['value'] for item in dados if 'data' in item)),
+            'atores': list(set(item['atores']['value'] for item in dados if 'atores' in item)),
+            'realizadores': list(set(item['realizadores']['value'] for item in dados if 'realizadores' in item)),
+            'produtores': list(set(item['produtores']['value'] for item in dados if 'produtores' in item)),
+            'escritores': list(set(item['escritores']['value'] for item in dados if 'escritores' in item)),
+            'argumentistas': list(set(item['argumentistas']['value'] for item in dados if 'argumentistas' in item)),
+            'compositores': list(set(item['compositores']['value'] for item in dados if 'compositores' in item)),
+            'generos': list(set(item['generos']['value'] for item in dados if 'generos' in item)),
+            'books': list(set(item['books']['value'] for item in dados if 'books' in item)),
+        }
+        
+        return render_template('filme.html', filme_data=filme_data, nome=nome)
     else:
-        return render_template('empty.html', data = { 'data': data_iso_formatada })
+        return render_template('empty.html', data={'data': data_iso_formatada})
+
+
+
+
 
 @app.route('/pessoas')
 def pessoas():
@@ -85,16 +103,24 @@ def ator(nome):
     sparql_query = f'''
 PREFIX tp: <http://www.semanticweb.org/andre/ontologies/2024/cinema/>
 select ?film_title where {{
-?film_title a tp:Film .
-?film_title tp:hasActor tp:{nome} .
+?film a tp:Film .
+?film tp:movie_title ?film_title .
+?film tp:hasActor tp:{nome} .
 }}
 '''
-    resposta = requests.get(graphdb_endpoint, params={ 'query': sparql_query }, headers={ 'Accept': 'application/sparql-results+json' })
-    if resposta.status_code == 200:
+    resposta = requests.get(graphdb_endpoint, params={'query': sparql_query}, headers={'Accept': 'application/sparql-results+json'})
+    if resposta.status_code == 200 or resposta.status_code == 304:
         dados = resposta.json()['results']['bindings']
-        return render_template('ator.html', data = dados)
+        
+        # Extracting data for easier access in the template
+        filme_data = {
+            'nome': nome,
+            'film_title': list(set(item['film_title']['value'] for item in dados if 'film_title' in item))
+        }
+        
+        return render_template('ator.html', filme_data=filme_data, nome=nome)
     else:
-        return render_template('empty.html', data = { 'data': data_iso_formatada })
+        return render_template('empty.html', data={'data': data_iso_formatada})
 
 @app.route('/realizadores')
 def realizadores():
@@ -109,7 +135,7 @@ select ?nome ?data_nascimento where {
     resposta = requests.get(graphdb_endpoint, params={ 'query': sparql_query }, headers={ 'Accept': 'application/sparql-results+json' })
     if resposta.status_code == 200:
         dados = resposta.json()['results']['bindings']
-        return render_template('realizdores.html', data = dados)
+        return render_template('realizadores.html', data = dados)
     else:
         return render_template('empty.html', data = { 'data': data_iso_formatada })
     
@@ -118,16 +144,24 @@ def realizador(nome):
     sparql_query = f'''
 PREFIX tp: <http://www.semanticweb.org/andre/ontologies/2024/cinema/>
 select ?film_title where {{
-?film_title a tp:Film .
-?film_title tp:hasDirector tp:{nome} .
+?film a tp:Film .
+?film tp:movie_title ?film_title .
+?film tp:hasDirector tp:{nome} .
 }}
 '''
-    resposta = requests.get(graphdb_endpoint, params={ 'query': sparql_query }, headers={ 'Accept': 'application/sparql-results+json' })
-    if resposta.status_code == 200:
+    resposta = requests.get(graphdb_endpoint, params={'query': sparql_query}, headers={'Accept': 'application/sparql-results+json'})
+    if resposta.status_code == 200 or resposta.status_code == 304:
         dados = resposta.json()['results']['bindings']
-        return render_template('realizador.html', data = dados)
+        
+        # Extracting data for easier access in the template
+        filme_data = {
+            'nome': nome,
+            'film_title': list(set(item['film_title']['value'] for item in dados if 'film_title' in item))
+        }
+        
+        return render_template('realizador.html', filme_data=filme_data, nome=nome)
     else:
-        return render_template('empty.html', data = { 'data': data_iso_formatada })
+        return render_template('empty.html', data={'data': data_iso_formatada})
 
 @app.route('/produtores')
 def produtores():
@@ -150,16 +184,24 @@ def produtor(nome):
     sparql_query = f'''
 PREFIX tp: <http://www.semanticweb.org/andre/ontologies/2024/cinema/>
 select ?film_title where {{
-?film_title a tp:Film .
-?film_title tp:hasProducer tp:{nome} .
+?film a tp:Film .
+?film tp:movie_title ?film_title .
+?film tp:hasProducer tp:{nome} .
 }}
 '''
-    resposta = requests.get(graphdb_endpoint, params={ 'query': sparql_query }, headers={ 'Accept': 'application/sparql-results+json' })
-    if resposta.status_code == 200:
+    resposta = requests.get(graphdb_endpoint, params={'query': sparql_query}, headers={'Accept': 'application/sparql-results+json'})
+    if resposta.status_code == 200 or resposta.status_code == 304:
         dados = resposta.json()['results']['bindings']
-        return render_template('produtor.html', data = dados)
+        
+        # Extracting data for easier access in the template
+        filme_data = {
+            'nome': nome,
+            'film_title': list(set(item['film_title']['value'] for item in dados if 'film_title' in item))
+        }
+        
+        return render_template('produtor.html', filme_data=filme_data, nome=nome)
     else:
-        return render_template('empty.html', data = { 'data': data_iso_formatada })
+        return render_template('empty.html', data={'data': data_iso_formatada})
 
 @app.route('/escritores')
 def escritores():
@@ -182,16 +224,24 @@ def escritor(nome):
     sparql_query = f'''
 PREFIX tp: <http://www.semanticweb.org/andre/ontologies/2024/cinema/>
 select ?film_title where {{
-?film_title a tp:Film .
-?film_title tp:hasWriter tp:{nome} .
+?film a tp:Film .
+?film tp:movie_title ?film_title .
+?film tp:hasWriter tp:{nome} .
 }}
 '''
-    resposta = requests.get(graphdb_endpoint, params={ 'query': sparql_query }, headers={ 'Accept': 'application/sparql-results+json' })
-    if resposta.status_code == 200:
+    resposta = requests.get(graphdb_endpoint, params={'query': sparql_query}, headers={'Accept': 'application/sparql-results+json'})
+    if resposta.status_code == 200 or resposta.status_code == 304:
         dados = resposta.json()['results']['bindings']
-        return render_template('escritor.html', data = dados)
+        
+        # Extracting data for easier access in the template
+        filme_data = {
+            'nome': nome,
+            'film_title': list(set(item['film_title']['value'] for item in dados if 'film_title' in item))
+        }
+        
+        return render_template('escritor.html', filme_data=filme_data, nome=nome)
     else:
-        return render_template('empty.html', data = { 'data': data_iso_formatada })
+        return render_template('empty.html', data={'data': data_iso_formatada})
 
 @app.route('/argumentistas')
 def argumentistas():
@@ -214,16 +264,24 @@ def argumentista(nome):
     sparql_query = f'''
 PREFIX tp: <http://www.semanticweb.org/andre/ontologies/2024/cinema/>
 select ?film_title where {{
-?film_title a tp:Film .
-?film_title tp:hasScreenwriter tp:{nome} .
+?film a tp:Film .
+?film tp:movie_title ?film_title .
+?film tp:hasScreenwriter tp:{nome} .
 }}
 '''
-    resposta = requests.get(graphdb_endpoint, params={ 'query': sparql_query }, headers={ 'Accept': 'application/sparql-results+json' })
-    if resposta.status_code == 200:
+    resposta = requests.get(graphdb_endpoint, params={'query': sparql_query}, headers={'Accept': 'application/sparql-results+json'})
+    if resposta.status_code == 200 or resposta.status_code == 304:
         dados = resposta.json()['results']['bindings']
-        return render_template('argumentista.html', data = dados)
+        
+        # Extracting data for easier access in the template
+        filme_data = {
+            'nome': nome,
+            'film_title': list(set(item['film_title']['value'] for item in dados if 'film_title' in item))
+        }
+        
+        return render_template('argumentista.html', filme_data=filme_data, nome=nome)
     else:
-        return render_template('empty.html', data = { 'data': data_iso_formatada })
+        return render_template('empty.html', data={'data': data_iso_formatada})
 
 @app.route('/compositores')
 def bandas_sonoras():
@@ -246,24 +304,32 @@ def compositor(nome):
     sparql_query = f'''
 PREFIX tp: <http://www.semanticweb.org/andre/ontologies/2024/cinema/>
 select ?film_title where {{
-?film_title a tp:Film .
-?film_title tp:hasComposer tp:{nome} .
+?film a tp:Film .
+?film tp:movie_title ?film_title .
+?film tp:hasComposer tp:{nome} .
 }}
 '''
-    resposta = requests.get(graphdb_endpoint, params={ 'query': sparql_query }, headers={ 'Accept': 'application/sparql-results+json' })
-    if resposta.status_code == 200:
+    resposta = requests.get(graphdb_endpoint, params={'query': sparql_query}, headers={'Accept': 'application/sparql-results+json'})
+    if resposta.status_code == 200 or resposta.status_code == 304:
         dados = resposta.json()['results']['bindings']
-        return render_template('compositor.html', data = dados)
+        
+        # Extracting data for easier access in the template
+        filme_data = {
+            'nome': nome,
+            'film_title': list(set(item['film_title']['value'] for item in dados if 'film_title' in item))
+        }
+        
+        return render_template('compositor.html', filme_data=filme_data, nome=nome)
     else:
-        return render_template('empty.html', data = { 'data': data_iso_formatada })
+        return render_template('empty.html', data={'data': data_iso_formatada})
 
 @app.route('/generos')
 def generos():
     sparql_query = '''
 prefix tp: <http://www.semanticweb.org/andre/ontologies/2024/cinema/>
-select ?s where {
-    ?s a tp:Genre .
-}'''
+select ?generos where {
+    ?generos a tp:Genre .
+}order by ?generos'''
     resposta = requests.get(graphdb_endpoint, params={ 'query': sparql_query }, headers={ 'Accept': 'application/sparql-results+json' })
     if resposta.status_code == 200:
         dados = resposta.json()['results']['bindings']
@@ -276,16 +342,24 @@ def genero(nome):
     sparql_query = f'''
 PREFIX tp: <http://www.semanticweb.org/andre/ontologies/2024/cinema/>
 select ?film_title where {{
-?film_title a tp:Film .
-?film_title tp:hasGenre tp:{nome} .
+?film a tp:Film .
+?film tp:movie_title ?film_title .
+?film tp:hasGenre tp:{nome} .
 }}
 '''
-    resposta = requests.get(graphdb_endpoint, params={ 'query': sparql_query }, headers={ 'Accept': 'application/sparql-results+json' })
-    if resposta.status_code == 200:
+    resposta = requests.get(graphdb_endpoint, params={'query': sparql_query}, headers={'Accept': 'application/sparql-results+json'})
+    if resposta.status_code == 200 or resposta.status_code == 304:
         dados = resposta.json()['results']['bindings']
-        return render_template('genero.html', data = dados)
+        
+        # Extracting data for easier access in the template
+        filme_data = {
+            'nome': nome,
+            'film_title': list(set(item['film_title']['value'] for item in dados if 'film_title' in item))
+        }
+        
+        return render_template('genero.html', filme_data=filme_data, nome=nome)
     else:
-        return render_template('empty.html', data = { 'data': data_iso_formatada })
+        return render_template('empty.html', data={'data': data_iso_formatada})
 
 if __name__ == '__main__':
     app.run(debug=True)
