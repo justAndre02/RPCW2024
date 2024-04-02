@@ -18,7 +18,7 @@ def index():
 @app.route('/filmes')
 def filmes():
     sparql_query = '''
-prefix tp: <http://www.semanticweb.org/andre/ontologies/2024/cinema/>
+prefix tp: <http://rpcw.di.uminho.pt/2024/cinema/>
 select ?titulo where {
     ?s a tp:Film ;
        tp:movie_title ?titulo .
@@ -34,7 +34,7 @@ select ?titulo where {
 @app.route('/filmes/<nome>')
 def filme(nome):
     sparql_query = f'''
-    PREFIX tp: <http://www.semanticweb.org/andre/ontologies/2024/cinema/>
+    PREFIX tp: <http://rpcw.di.uminho.pt/2024/cinema/>
     select ?nome ?duracao ?data ?atores ?realizadores ?produtores ?escritores ?argumentistas ?compositores ?generos ?books where {{
         ?s a tp:Film .
         ?s tp:movie_title "{nome}" .
@@ -74,9 +74,6 @@ def filme(nome):
         return render_template('empty.html', data={'data': data_iso_formatada})
 
 
-
-
-
 @app.route('/pessoas')
 def pessoas():
     return render_template('pessoas.html', data = {"data": data_iso_formatada})
@@ -84,7 +81,7 @@ def pessoas():
 @app.route('/atores')
 def atores():
     sparql_query = '''
-prefix tp: <http://www.semanticweb.org/andre/ontologies/2024/cinema/>
+prefix tp: <http://rpcw.di.uminho.pt/2024/cinema/>
 select ?nome ?data_nascimento where {
     ?s a tp:Actor ;
        tp:name ?nome ;
@@ -101,7 +98,7 @@ select ?nome ?data_nascimento where {
 @app.route('/atores/<nome>')
 def ator(nome):
     sparql_query = f'''
-PREFIX tp: <http://www.semanticweb.org/andre/ontologies/2024/cinema/>
+PREFIX tp: <http://rpcw.di.uminho.pt/2024/cinema/>
 select ?film_title where {{
 ?film a tp:Film .
 ?film tp:movie_title ?film_title .
@@ -125,7 +122,7 @@ select ?film_title where {{
 @app.route('/realizadores')
 def realizadores():
     sparql_query = '''
-prefix tp: <http://www.semanticweb.org/andre/ontologies/2024/cinema/>
+prefix tp: <http://rpcw.di.uminho.pt/2024/cinema/>
 select ?nome ?data_nascimento where {
     ?s a tp:Director ;
        tp:name ?nome ;
@@ -142,7 +139,7 @@ select ?nome ?data_nascimento where {
 @app.route('/realizadores/<nome>')
 def realizador(nome):
     sparql_query = f'''
-PREFIX tp: <http://www.semanticweb.org/andre/ontologies/2024/cinema/>
+PREFIX tp: <http://rpcw.di.uminho.pt/2024/cinema/>
 select ?film_title where {{
 ?film a tp:Film .
 ?film tp:movie_title ?film_title .
@@ -166,7 +163,7 @@ select ?film_title where {{
 @app.route('/produtores')
 def produtores():
     sparql_query = '''
-prefix tp: <http://www.semanticweb.org/andre/ontologies/2024/cinema/>
+prefix tp: <http://rpcw.di.uminho.pt/2024/cinema/>
 select ?nome ?data_nascimento where {
     ?s a tp:Producer ;
        tp:name ?nome ;
@@ -182,7 +179,7 @@ select ?nome ?data_nascimento where {
 @app.route('/produtores/<nome>')
 def produtor(nome):
     sparql_query = f'''
-PREFIX tp: <http://www.semanticweb.org/andre/ontologies/2024/cinema/>
+PREFIX tp: <http://rpcw.di.uminho.pt/2024/cinema/>
 select ?film_title where {{
 ?film a tp:Film .
 ?film tp:movie_title ?film_title .
@@ -206,7 +203,7 @@ select ?film_title where {{
 @app.route('/escritores')
 def escritores():
     sparql_query = '''
-prefix tp: <http://www.semanticweb.org/andre/ontologies/2024/cinema/>
+prefix tp: <http://rpcw.di.uminho.pt/2024/cinema/>
 select ?nome ?data_nascimento where {
     ?s a tp:Writer ;
        tp:name ?nome ;
@@ -222,7 +219,7 @@ select ?nome ?data_nascimento where {
 @app.route('/escritores/<nome>')
 def escritor(nome):
     sparql_query = f'''
-PREFIX tp: <http://www.semanticweb.org/andre/ontologies/2024/cinema/>
+PREFIX tp: <http://rpcw.di.uminho.pt/2024/cinema/>
 select ?film_title where {{
 ?film a tp:Film .
 ?film tp:movie_title ?film_title .
@@ -246,7 +243,7 @@ select ?film_title where {{
 @app.route('/argumentistas')
 def argumentistas():
     sparql_query = '''
-prefix tp: <http://www.semanticweb.org/andre/ontologies/2024/cinema/>
+prefix tp: <http://rpcw.di.uminho.pt/2024/cinema/>
 select ?nome ?data_nascimento where {
     ?s a tp:Screenwriter ;
        tp:name ?nome ;
@@ -262,7 +259,7 @@ select ?nome ?data_nascimento where {
 @app.route('/argumentistas/<nome>')
 def argumentista(nome):
     sparql_query = f'''
-PREFIX tp: <http://www.semanticweb.org/andre/ontologies/2024/cinema/>
+PREFIX tp: <http://rpcw.di.uminho.pt/2024/cinema/>
 select ?film_title where {{
 ?film a tp:Film .
 ?film tp:movie_title ?film_title .
@@ -286,7 +283,7 @@ select ?film_title where {{
 @app.route('/compositores')
 def bandas_sonoras():
     sparql_query = '''
-prefix tp: <http://www.semanticweb.org/andre/ontologies/2024/cinema/>
+prefix tp: <http://rpcw.di.uminho.pt/2024/cinema/>
 select ?nome ?data_nascimento where {
     ?s a tp:Musician ;
        tp:name ?nome ;
@@ -302,7 +299,7 @@ select ?nome ?data_nascimento where {
 @app.route('/compositores/<nome>')
 def compositor(nome):
     sparql_query = f'''
-PREFIX tp: <http://www.semanticweb.org/andre/ontologies/2024/cinema/>
+PREFIX tp: <http://rpcw.di.uminho.pt/2024/cinema/>
 select ?film_title where {{
 ?film a tp:Film .
 ?film tp:movie_title ?film_title .
@@ -326,7 +323,7 @@ select ?film_title where {{
 @app.route('/generos')
 def generos():
     sparql_query = '''
-prefix tp: <http://www.semanticweb.org/andre/ontologies/2024/cinema/>
+prefix tp: <http://rpcw.di.uminho.pt/2024/cinema/>
 select ?generos where {
     ?generos a tp:Genre .
 }order by ?generos'''
@@ -340,7 +337,7 @@ select ?generos where {
 @app.route('/generos/<nome>')
 def genero(nome):
     sparql_query = f'''
-PREFIX tp: <http://www.semanticweb.org/andre/ontologies/2024/cinema/>
+PREFIX tp: <http://rpcw.di.uminho.pt/2024/cinema/>
 select ?film_title where {{
 ?film a tp:Film .
 ?film tp:movie_title ?film_title .

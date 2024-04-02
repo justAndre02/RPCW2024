@@ -10,7 +10,7 @@ with open('cinema.json', 'r', encoding='utf-8') as file:
     data = json.load(file)
 file.close()
 
-cinema = Namespace("http://www.semanticweb.org/andre/ontologies/2024/cinema/")
+cinema = Namespace("http://rpcw.di.uminho.pt/2024/cinema/")
 # Assuming 'data' is a list of dictionaries where each dictionary represents a film
 for film in data:
     film_uri = URIRef(f"""{cinema}{film['film'].replace(' ', '_').replace('%28', '').replace('%29', '')
