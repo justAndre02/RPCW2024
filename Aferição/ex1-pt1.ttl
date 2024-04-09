@@ -1,0 +1,200 @@
+@prefix : <http://www.semanticweb.org/andre/ontologies/2024/avaliacao/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://www.semanticweb.org/andre/ontologies/2024/avaliacao/> .
+
+<http://www.semanticweb.org/andre/ontologies/2024/avaliacao> rdf:type owl:Ontology .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://www.semanticweb.org/andre/ontologies/2024/avaliacao/cursoDe
+:cursoDe rdf:type owl:ObjectProperty ;
+         owl:inverseOf :hasCurso .
+
+
+###  http://www.semanticweb.org/andre/ontologies/2024/avaliacao/exameDe
+:exameDe rdf:type owl:ObjectProperty ;
+         owl:inverseOf :hasExame .
+
+
+###  http://www.semanticweb.org/andre/ontologies/2024/avaliacao/hasCurso
+:hasCurso rdf:type owl:ObjectProperty ;
+          rdfs:domain :Aluno ;
+          rdfs:range :Curso .
+
+
+###  http://www.semanticweb.org/andre/ontologies/2024/avaliacao/hasExame
+:hasExame rdf:type owl:ObjectProperty ;
+          rdfs:domain :Aluno ;
+          rdfs:range :Exame .
+
+
+###  http://www.semanticweb.org/andre/ontologies/2024/avaliacao/hasProjeto
+:hasProjeto rdf:type owl:ObjectProperty ;
+            owl:inverseOf :projetoDe ;
+            rdfs:domain :Aluno ;
+            rdfs:range :Projeto .
+
+
+###  http://www.semanticweb.org/andre/ontologies/2024/avaliacao/hasTPC
+:hasTPC rdf:type owl:ObjectProperty ;
+        owl:inverseOf :tpcDe ;
+        rdfs:domain :Aluno ;
+        rdfs:range :TPC .
+
+
+###  http://www.semanticweb.org/andre/ontologies/2024/avaliacao/projetoDe
+:projetoDe rdf:type owl:ObjectProperty .
+
+
+###  http://www.semanticweb.org/andre/ontologies/2024/avaliacao/tpcDe
+:tpcDe rdf:type owl:ObjectProperty .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://www.semanticweb.org/andre/ontologies/2024/avaliacao/id_aluno
+:id_aluno rdf:type owl:DatatypeProperty .
+
+
+###  http://www.semanticweb.org/andre/ontologies/2024/avaliacao/id_tpc
+:id_tpc rdf:type owl:DatatypeProperty .
+
+
+###  http://www.semanticweb.org/andre/ontologies/2024/avaliacao/nome_aluno
+:nome_aluno rdf:type owl:DatatypeProperty .
+
+
+###  http://www.semanticweb.org/andre/ontologies/2024/avaliacao/nome_curso
+:nome_curso rdf:type owl:DatatypeProperty .
+
+
+###  http://www.semanticweb.org/andre/ontologies/2024/avaliacao/nome_exame
+:nome_exame rdf:type owl:DatatypeProperty .
+
+
+###  http://www.semanticweb.org/andre/ontologies/2024/avaliacao/nota_exame
+:nota_exame rdf:type owl:DatatypeProperty .
+
+
+###  http://www.semanticweb.org/andre/ontologies/2024/avaliacao/nota_projeto
+:nota_projeto rdf:type owl:DatatypeProperty .
+
+
+###  http://www.semanticweb.org/andre/ontologies/2024/avaliacao/nota_tpc
+:nota_tpc rdf:type owl:DatatypeProperty .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://www.semanticweb.org/andre/ontologies/2024/avaliacao/Aluno
+:Aluno rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/andre/ontologies/2024/avaliacao/Curso
+:Curso rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/andre/ontologies/2024/avaliacao/Exame
+:Exame rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/andre/ontologies/2024/avaliacao/Projeto
+:Projeto rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/andre/ontologies/2024/avaliacao/TPC
+:TPC rdf:type owl:Class .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  http://www.semanticweb.org/andre/ontologies/2024/avaliacao/A91509
+:A91509 rdf:type owl:NamedIndividual ,
+                 :Aluno ;
+        :hasCurso :MML ;
+        :hasExame :A91509_especial ,
+                  :A91509_normal ,
+                  :A91509_recurso ;
+        :hasProjeto :A91509_projeto ;
+        :hasTPC :A91509_tpc1 ,
+                :A91509_tpc2 ,
+                :A91509_tpc6 ,
+                :A91509_tpc7 ;
+        :id_aluno "A91509" ;
+        :nome_aluno "Momtahana Caldinhas" .
+
+
+###  http://www.semanticweb.org/andre/ontologies/2024/avaliacao/A91509_especial
+:A91509_especial rdf:type owl:NamedIndividual ,
+                          :Exame ;
+                 :nome_exame "especial" ;
+                 :nota_exame 19 .
+
+
+###  http://www.semanticweb.org/andre/ontologies/2024/avaliacao/A91509_normal
+:A91509_normal rdf:type owl:NamedIndividual ,
+                        :Exame ;
+               :nome_exame "normal" ;
+               :nota_exame 3 .
+
+
+###  http://www.semanticweb.org/andre/ontologies/2024/avaliacao/A91509_projeto
+:A91509_projeto rdf:type owl:NamedIndividual ,
+                         :Projeto ;
+                :nota_projeto 14 .
+
+
+###  http://www.semanticweb.org/andre/ontologies/2024/avaliacao/A91509_recurso
+:A91509_recurso rdf:type owl:NamedIndividual ,
+                         :Exame ;
+                :nome_exame "recurso" ;
+                :nota_exame 16 .
+
+
+###  http://www.semanticweb.org/andre/ontologies/2024/avaliacao/A91509_tpc1
+:A91509_tpc1 rdf:type owl:NamedIndividual ,
+                      :TPC ;
+             :id_tpc "tpc1" ;
+             :nota_tpc 0.94 .
+
+
+###  http://www.semanticweb.org/andre/ontologies/2024/avaliacao/A91509_tpc2
+:A91509_tpc2 rdf:type owl:NamedIndividual ,
+                      :TPC ;
+             :id_tpc "tpc_2" ;
+             :nota_tpc 0.9 .
+
+
+###  http://www.semanticweb.org/andre/ontologies/2024/avaliacao/A91509_tpc6
+:A91509_tpc6 rdf:type owl:NamedIndividual ,
+                      :TPC ;
+             :id_tpc "tpc6" ;
+             :nota_tpc 0.05 .
+
+
+###  http://www.semanticweb.org/andre/ontologies/2024/avaliacao/A91509_tpc7
+:A91509_tpc7 rdf:type owl:NamedIndividual ,
+                      :TPC ;
+             :id_tpc "tpc7" ;
+             :nota_tpc 0.27 .
+
+
+###  http://www.semanticweb.org/andre/ontologies/2024/avaliacao/MML
+:MML rdf:type owl:NamedIndividual ,
+              :Curso ;
+     :nome_curso "MML" .
+
+
+###  Generated by the OWL API (version 4.5.26.2023-07-17T20:34:13Z) https://github.com/owlcs/owlapi

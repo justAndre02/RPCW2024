@@ -1,0 +1,75 @@
+Queries
+
+Quantos alunos estão registados? (inteiro)
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT (COUNT(?aluno_nome) AS ?numAlunos)WHERE {
+  ?aluno_nome rdf:type <http://www.semanticweb.org/andre/ontologies/2024/avaliacao/Aluno> .
+}
+
+Quantos alunos frequentam o curso "LCC"? (inteiro)
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX : <http://www.semanticweb.org/andre/ontologies/2024/avaliacao/>
+SELECT (COUNT(?aluno_nome) AS ?numAlunos)WHERE {
+  ?aluno_nome rdf:type :Aluno .
+  ?aluno_nome :hasCurso :LCC
+}
+
+Que alunos tiveram nota positiva no exame de época normal? (lista ordenada alfabeticamente por nome com: idAluno, nome, curso, nota do exame);
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX : <http://www.semanticweb.org/andre/ontologies/2024/avaliacao/>
+
+SELECT ?id_aluno ?nome_aluno ?curso ?notaExame
+WHERE {
+  ?aluno rdf:type :Aluno .
+  ?aluno :hasCurso ?curso .
+  ?aluno :id_aluno ?id_aluno .
+  ?aluno :nome_aluno ?nome_aluno .
+  ?aluno :hasExame ?Exame .
+  ?Exame :nota_exame ?notaExame .
+  ?Exame :nome_exame ?nomeExame .
+FILTER (?notaExame >= 10)  # Considerando nota positiva como maior ou igual a 10.
+FILTER (?nomeExame = "normal")
+}
+ORDER BY ?nome_aluno
+
+Qual a distribuição dos alunos pelas notas do projeto? (lista com: nota e número de alunos que obtiveram essa nota)
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX : <http://www.semanticweb.org/andre/ontologies/2024/avaliacao/>
+
+SELECT ?nota (COUNT(?aluno) AS ?numAlunos)
+WHERE {
+  ?aluno rdf:type :Aluno .
+  ?aluno :hasProjeto ?nome .
+  ?nome :nota_projeto ?nota
+}
+GROUP BY ?nota
+ORDER BY ?nota
+
+Quais os alunos mais trabalhadores durante o semestre? (lista ordenada por ordem decrescente do total: idAluno, nome, curso, total = somatório dos resultados dos TPC)
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX : <http://www.semanticweb.org/andre/ontologies/2024/avaliacao/>
+
+SELECT ?idAluno ?nome ?curso (SUM(?nota_tpc) AS ?total)
+WHERE {
+  ?aluno rdf:type :Aluno .
+  ?aluno :hasTPC ?nome_tpc .
+  ?nome_tpc :nota_tpc ?nota_tpc .
+  ?aluno :id_aluno ?idAluno .
+  ?aluno :nome_aluno ?nome .
+  ?aluno :hasCurso ?curso .
+}
+GROUP BY ?idAluno ?nome ?curso
+ORDER BY DESC(?total)
+
+Qual a distribuição dos alunos pelos vários cursos? (lista de cursos, ordenada alfabeticamente por curso, com: curso, número de alunos nesse curso)
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX : <http://www.semanticweb.org/andre/ontologies/2024/avaliacao/>
+
+SELECT ?curso (COUNT(?aluno) AS ?numAlunos)
+WHERE {
+  ?aluno rdf:type :Aluno .
+  ?aluno :hasCurso ?curso .
+}
+GROUP BY ?curso
+ORDER BY ?curso
