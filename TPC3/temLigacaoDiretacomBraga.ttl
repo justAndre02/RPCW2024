@@ -1,0 +1,43 @@
+@prefix : <http://rpcw.di.uminho.pt/2024/mapa/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf4j: <http://rdf4j.org/schema/rdf4j#> .
+@prefix sesame: <http://www.openrdf.org/schema/sesame#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix fn: <http://www.w3.org/2005/xpath-functions#> .
+
+:c2 :temLigacaoDiretaCom :c99, :c84, :c75, :c22, :c44, :c62, :c82, :c91, :c78, :c55,
+    :c87, :c70, :c10, :c53, :c32, :c66, :c54, :c81, :c24, :c3, :c4, :c51, :c43, :c12,
+    :c61, :c77, :c20, :c60, :c29, :c6, :c58, :c13, :c8, :c38, :c23, :c47, :c18, :c73,
+    :c57, :c94, :c34, :c85, :c11 .
+
+:c3 :temLigacaoDiretaCom :c62, :c18, :c74, :c87, :c25, :c82, :c5, :c49, :c11, :c44,
+    :c79, :c97, :c23, :c28, :c29, :c81, :c30, :c15, :c57, :c65, :c76, :c89, :c88, :c16,
+    :c69, :c4, :c31, :c93, :c6, :c47, :c75, :c51, :c38, :c55, :c60, :c58, :c92, :c7, :c72,
+    :c90, :c9 .
+
+:c6 :temLigacaoDiretaCom :c60, :c22, :c78, :c25, :c81, :c83, :c13, :c41, :c49, :c14,
+    :c39, :c7, :c35, :c68, :c50, :c23, :c92, :c64, :c9, :c55, :c77, :c93, :c28, :c27,
+    :c40, :c31, :c18, :c10, :c16, :c79, :c74, :c75, :c15, :c95, :c63, :c38, :c62, :c96,
+    :c12 .
+
+:c25 :temLigacaoDiretaCom :c79, :c37, :c43, :c85, :c100, :c60, :c56, :c33, :c64, :c76,
+    :c93, :c72, :c89, :c38, :c51, :c46, :c50, :c92, :c52, :c40, :c70, :c82, :c78, :c98,
+    :c86, :c55, :c67, :c39, :c29, :c74, :c69, :c97, :c53, :c90 .
+
+:c29 :temLigacaoDiretaCom :c82, :c53, :c96, :c57, :c56, :c88, :c39, :c75, :c69, :c43,
+    :c83, :c100, :c73, :c35, :c84, :c81, :c71, :c32, :c63, :c31, :c50, :c44, :c97, :c94 .
+
+:c36 :temLigacaoDiretaCom :c97, :c64, :c75, :c52, :c60, :c47, :c96, :c94, :c40, :c48,
+    :c50, :c69, :c74, :c46, :c56, :c93, :c83, :c79, :c62, :c53, :c70, :c63, :c54 .
+
+:c50 :temLigacaoDiretaCom :c96, :c59, :c99, :c52, :c97, :c83, :c61, :c75, :c100, :c64,
+    :c76, :c51 .
+
+:c65 :temLigacaoDiretaCom :c86, :c69, :c72, :c76, :c84, :c67, :c93, :c78, :c95, :c77,
+    :c71, :c81, :c96, :c74, :c68 .
+
+:c77 :temLigacaoDiretaCom :c91, :c97, :c81, :c83, :c100, :c92, :c82, :c93 .
+
+:c89 :temLigacaoDiretaCom :c94, :c97, :c91 .
