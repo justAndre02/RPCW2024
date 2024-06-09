@@ -1,0 +1,150 @@
+Listar todos documentos
+
+PREFIX : <http://rpcw.di.uminho.pt/2024/Diario_Replublica/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT ?doc
+WHERE {
+  ?doc rdf:type :Document .
+}
+ORDER BY ?doc
+LIMIT 200
+OFFSET 0
+
+
+Listar todos autores
+
+PREFIX : <http://rpcw.di.uminho.pt/2024/Diario_Replublica/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+SELECT ?emit_name
+WHERE {
+  ?emit rdf:type :Emitter .
+  ?emit :emitter_name ?emit_name.
+  
+}
+ORDER BY ?emit_name
+
+
+Listar todos por tipos de documento
+
+PREFIX : <http://rpcw.di.uminho.pt/2024/Diario_Replublica/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT Distinct ?type
+WHERE {
+  ?doc rdf:type :Document.
+  ?doc :docType ?type.   
+      }
+
+
+Listar documentos por dia
+
+PREFIX : <http://rpcw.di.uminho.pt/2024/Diario_Replublica/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT ?doc
+WHERE {
+  ?doc rdf:type :Document .
+  ?doc :date "2004-08-04"
+}
+ORDER BY ?doc
+LIMIT 200
+OFFSET 0
+
+Listar a informação de cada documento
+
+PREFIX : <http://rpcw.di.uminho.pt/2024/Diario_Replublica/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT ?emitter ?date ?type ?notes ?number ?numberDR ?series ?source
+WHERE {
+  :176640 rdf:type :Document ;
+      :hasEmitter ?emitter;
+      :date ?date ;
+      :docType ?type;
+      :notes ?notes;
+      :number ?number;
+      :numberDR ?numberDR;
+      :series ?series;
+      :source ?source;
+}
+
+
+Listar os documentos associados ao autor
+
+PREFIX : <http://rpcw.di.uminho.pt/2024/Diario_Replublica/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT ?doc
+WHERE {
+  ?doc rdf:type :Document.
+  ?doc :hasEmitter :MINISTRO_ADJUNTO-PRESIDÊNCIA_DO_CONSELHO_DE_MINISTROS.
+      
+      }
+
+
+Listar os documentos associados a um tipo de documento
+
+PREFIX : <http://rpcw.di.uminho.pt/2024/Diario_Replublica/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT ?doc
+WHERE {
+  ?doc rdf:type :Document .
+  ?doc :docType "DESPACHO"
+}
+ORDER BY ?doc
+LIMIT 200
+OFFSET 0
+
+Pesquisar documentos pelo nome
+
+PREFIX : <http://rpcw.di.uminho.pt/2024/Diario_Replublica/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT ?id
+WHERE {
+  ?id rdf:type :Document .
+  FILTER (?id = :6)
+}
+
+Pesquisar autores pelo nome
+
+PREFIX : <http://rpcw.di.uminho.pt/2024/Diario_Replublica/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT ?id
+WHERE {
+  ?id rdf:type :Emitter .
+  ?id :emitter_name "MINISTRO ADJUNTO-PRESIDÊNCIA DO CONSELHO DE MINISTROS".
+}
+
+Adicionar documentos
+
+PREFIX : <http://rpcw.di.uminho.pt/2024/Diario_Replublica/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+INSERT DATA {
+  :NewDocument rdf:type :Document ;
+               :date "2024-05-31" ;
+			   :hasEmitter :MINISTÉRIO_DOS_NEGÓCIOS_ESTRANGEIROS;
+               :docType "TYPE_HERE" ;  
+               :number "NUMBER_HERE" ;  
+               :numberDR "NUMBERDR_HERE" ;  
+               :series 5 ;  
+               :notes "notes";
+               :source "SOURCE_HERE" .  
+}
+
+
+Adicionar autores
+
+PREFIX : <http://rpcw.di.uminho.pt/2024/Diario_Replublica/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+INSERT DATA {
+  :NewEmitter rdf:type :Emitter ;
+              :emitted 10;
+              :emitter_name "NAME_HERE" . 
+}
+

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autores - Diário da República</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename="autores/style.css") }}"/>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="{{ url_for('static', filename="DRE.png") }}" alt="Diário da República">
+        </div>
+        <div class="home-icon">
+            <a href="/"><img src="{{ url_for('static', filename="home.png") }}" alt="Home"></a>
+        </div>
+    </header>
+    <main>
+        <section class="content">
+            <h1>AUTORES</h1>
+            <div class="buttons-container">
+                <a href="/autores/all_pag=1" class="document-button">TODOS OS AUTORES</a>
+                <a href="/autores/add" class="document-button">INSERIR AUTOR</a>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

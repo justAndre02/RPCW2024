@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diário da República</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename="pagina-inicial/style.css") }}"/>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="{{ url_for('static', filename="DRE.png") }}" alt="Diário da República">
+        </div>
+        <div class="home-icon">
+            <a href=""><img src="{{ url_for('static', filename="home.png") }}" alt="Home"></a>
+        </div>
+    </header>
+    <main>
+        <aside>
+            <a href="/documentos" class="sidebar-link"><button class="sidebar-button">DOCUMENTOS</button></a>
+            <a href="/autores" class="sidebar-link"><button class="sidebar-button">AUTORES</button></a>
+        </aside>
+        <section class="content">
+            <h1>SEJA BEM VINDO</h1>
+            <div class="search-box">
+                <input type="text" id="searchInput" class="form-control" placeholder="Search...">
+                <div id="searchResults" class="dropdown-menu"></div>
+            </div>
+        </section>
+    </main>
+    <script>
+        const searchInput = document.getElementById('searchInput');
+        const searchResults = document.getElementById('searchResults');
+
+        searchInput.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                const searchTerm = searchInput.value;
+
+                if (searchTerm.length > 0) {
+                    // Perform search and get results
+                    performSearch(searchTerm).then(results => {
+                        // Clear previous results
+                        searchResults.innerHTML = '';
+
+                        // Display results in dropdown
+                        results.documents.forEach(function(result) {
+                            const resultItem = document.createElement('a');
+                            resultItem.textContent = 'Document ID: ' + result;
+                            resultItem.href = `/documento/${result}`;
+                            resultItem.className = 'dropdown-item';
+                            searchResults.appendChild(resultItem);
+                        });
+
+                        results.authors.forEach(function(result) {
+                            const resultItem = document.createElement('a');
+                            resultItem.textContent = 'Author: ' + result;
+                            resultItem.href = `/documentos/by_author/${result.replace(/ /g, "_")}_pag=1`;
+                            resultItem.className = 'dropdown-item';
+                            searchResults.appendChild(resultItem);
+                        });
+
+                        // Show the dropdown
+                        searchResults.style.display = 'block';
+                    });
+                } else {
+                    searchResults.style.display = 'none';
+                }
+            }
+        });
+
+        function performSearch(searchTerm) {
+            return fetch(`/search?term=${searchTerm}`)
+                .then(response => response.json())
+                .catch(error => console.error('Error:', error));
+        }
+
+        // Hide the dropdown when clicking outside of it
+        window.addEventListener('click', function(event) {
+            if (!event.target.matches('.search-box input')) {
+                searchResults.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

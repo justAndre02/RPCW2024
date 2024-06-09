@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentos - Diário da República</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename="documentos/style.css") }}"/>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="{{ url_for('static', filename="DRE.png") }}" alt="Diário da República">
+        </div>
+        <div class="home-icon">
+            <a href="/"><img src="{{ url_for('static', filename="home.png") }}" alt="Home"></a>
+        </div>
+    </header>
+    <main>
+        <section class="content">
+            <h1>DOCUMENTOS</h1>
+            <div class="buttons-container">
+                <a href="/documentos/all_pag=1" class="document-button">TODOS OS DOCUMENTOS</a>
+                <a href="/documentos/by_type_pag=1" class="document-button">TIPOS DE DOCUMENTOS</a>
+                <a href="/documentos/by_day" class="document-button">REGISTOS DIÁRIOS</a>
+                <a href="/documentos/add" class="document-button">INSERIR DOCUMENTO</a>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

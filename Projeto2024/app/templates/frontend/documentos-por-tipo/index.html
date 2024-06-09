@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todos os Documentos - Diário da República</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='documentos-por-tipo/style.css') }}"/>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="{{ url_for('static', filename='DRE.png') }}" alt="Diário da República">
+        </div>
+        <div class="home-icon">
+            <a href="/"><img src="{{ url_for('static', filename='home.png') }}" alt="Home"></a>
+        </div>
+    </header>
+    <main>
+        <section class="content">
+            <h1>{{tipo}}</h1>
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Search...">
+                <ul id="searchResults"></ul>
+            </div>
+            <table id="documentTable">
+                <tbody>
+                    <!-- Rows will be inserted here by JavaScript -->
+                </tbody>
+            </table>
+            <div class="pagination">
+                <button id="prevPage" onclick="prevPage()">Anterior</button>
+                <span id="pageInfo"></span>
+                <button id="nextPage" onclick="nextPage()">Próxima</button>
+            </div>
+        </section>
+    </main>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const rowsPerPage = 150;
+            let currentPage = {{ np }};
+            const totalPages = {{ pag }};
+            const data = {{ dados | tojson }};
+           
+            let filteredData = data;
+            const tableBody = document.querySelector('#documentTable tbody');
+            const searchInput = document.getElementById('searchInput');
+            const pageInfo = document.getElementById('pageInfo');
+            const prevPageButton = document.getElementById('prevPage');
+            const nextPageButton = document.getElementById('nextPage');
+            
+            function displayPage(page) {
+                tableBody.innerHTML = '';
+                const start = (page - 1) * rowsPerPage;
+                const end = start + rowsPerPage;
+                
+                for (let i = 0; i < filteredData.length; i++) {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `<td><a href="/documento/${filteredData[i]}">${filteredData[i]}</a></td>`;
+                    tableBody.appendChild(row);
+                }
+                
+                pageInfo.textContent = `Página ${page} de ${totalPages}`;
+                prevPageButton.disabled = page === 1;
+                nextPageButton.disabled = page === totalPages;
+            }
+            
+            function prevPage() {
+                if (currentPage > 1) {
+                    const backPage = currentPage - 1;
+                    window.location.href = `/documentos/by_type/{{tipo}}_pag=${backPage}`;
+                }
+            }
+            
+            function nextPage() {
+                if (currentPage < totalPages) {
+                    const nextPage = currentPage + 1;
+                    window.location.href = `/documentos/by_type/{{tipo}}_pag=${nextPage}`;
+                }
+            }
+            
+            function filterData() {
+                const filter = searchInput.value.trim().toUpperCase();
+                filteredData = data.filter(item => item.toUpperCase().includes(filter));
+                displayPage(1);
+            }
+            
+            searchInput.addEventListener('keyup', filterData);
+            
+
+            displayPage(currentPage);
+
+            window.prevPage = prevPage;
+            window.nextPage = nextPage;
+        });
+    </script>
+</body>
+</html>

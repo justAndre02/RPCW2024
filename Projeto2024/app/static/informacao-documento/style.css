@@ -1,0 +1,67 @@
+@import url("https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css");
+@import url("https://fonts.googleapis.com/css?family=Inter:400,700,800");
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 10px 20px;
+}
+
+.logo img {
+    height: 50px;
+}
+
+.home-icon img {
+    height: 40px;
+}
+  
+main {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    background-color: #F0EBE5;
+}
+  
+  .document-info {
+    font-family: 'Inter-Bold', Helvetica, sans-serif;
+    font-weight: 700;
+    width: 80%;
+    height: 70%;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 1em;
+  }
+  
+  .document-info h2 {
+    font-size: 2.5em;
+    margin-bottom: 1em;
+  }
+  
+  .details {
+    display: flex; /* Remove flex-wrap */
+    flex-direction: column; /* Stack elements vertically */
+    justify-content: space-between;
+  }
+  
+  .details p {
+    font-size: 1.2em;
+    margin: 1.5em 0;
+  }
+  
+  footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 1em 0;
+  }
+  

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escolher o dia - Diário da República</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename="escolher-dia/style.css") }}">
+    <link href="{{ url_for('static', filename="escolher-dia/dp-light.css") }}" rel="stylesheet">
+    <script defer src="{{ url_for('static', filename="escolher-dia/datepicker.js") }}"></script>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="{{ url_for('static', filename="DRE.png") }}" alt="Diário da República">
+        </div>
+        <div class="home-icon">
+            <a href="/"><img src="{{ url_for('static', filename="home.png") }}" alt="Home"></a>
+        </div>
+    </header>
+    <main>
+        <section class="content">
+            <h1>ESCOLHE UM DIA</h1>
+            <input type="text" id="demoB1" placeholder="Data ..." style="width: 150px; height: 40px; font-size: x-large; margin-bottom: 10px; margin-right: 24%; padding-left: 10px;">
+            <div id="demoB2"></div>
+
+            <!-- (C) ATTACH DATE PICKER ON LOAD -->
+            <script>
+            window.addEventListener("load", () => {
+                picker.attach({
+                    target: document.getElementById("demoB1"),
+                    container: document.getElementById("demoB2")
+                });
+            });
+
+            function updateLink() {
+                const dateInput = document.getElementById("demoB1").value;
+                const link = document.getElementById("chooseDateButton");
+                link.href = `/documentos/by_day/${dateInput}_pag=1`;
+            }
+            </script>
+            <div class="buttons-container">
+                <a id="chooseDateButton" href="#" class="document-button" onclick="updateLink()">ESCOLHER DATA</a>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

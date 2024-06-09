@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adicionar Documento - Diário da República</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename="inserir-documento/style.css") }}"/>
+    <style>
+        /* Estilo para o pop-up */
+        #popup {
+            display: none;
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            background-color: #ffffff;
+            border: 10px solid #585858;
+            z-index: 1000;
+        }
+        #popup .close {
+            cursor: pointer;
+            float: right;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="{{ url_for('static', filename="DRE.png") }}" alt="Diário da República">
+        </div>
+        <div class="home-icon">
+            <a href="/"><img src="{{ url_for('static', filename="home.png") }}" alt="Home"></a>
+        </div>
+    </header>
+    <main>
+        <section class="content">
+            <h1>ADICIONAR DOCUMENTO</h1>
+            <form id="addDocumentForm" method="POST" action="/documentos/add">
+                <div class="form-group">
+                    <label for="documentID">ID (OBRIGATÓRIO):</label>
+                    <input type="text" id="documentID" name="documentID" placeholder="ID DO DOCUMENTO" required>
+                </div>
+                <div class="form-group">
+                    <label for="documentType">TIPO (OBRIGATÓRIO):</label>
+                    <input type="text" id="documentType" name="documentType" placeholder="TIPO DE DOCUMENTO" required>
+                </div>
+                <div class="form-group">
+                    <label for="emitter">EMISSOR (OBRIGATÓRIO):</label>
+                    <input type="text" id="emitter" name="emitter" placeholder="DOCUMENTO EMITIDO POR QUEM" required>
+                </div>
+                <div class="form-group">
+                    <label for="documentNumber">NÚMERO (OBRIGATÓRIO):</label>
+                    <input type="text" id="documentNumber" name="documentNumber" placeholder="NÚMERO DE PUBLICAÇÃO" required>
+                </div>
+                <div class="form-group">
+                    <label for="documentNumberdr">NÚMERO DR:</label>
+                    <input type="text" id="documentNumberdr" name="documentNumberdr" placeholder="NÚMERO DE DATA DE PUBLICAÇÃO">
+                </div>
+                <div class="form-group">
+                    <label for="documentDate">DATA:</label>
+                    <input type="text" id="documentDate" name="documentDate" placeholder="DATA DE PUBLICAÇÃO">
+                </div>
+                <div class="form-group">
+                    <label for="documentSeries">SÉRIE:</label>
+                    <input type="text" id="documentSeries" name="documentSeries" placeholder="SÉRIE DE DOCUMENTO">
+                </div>
+                <div class="form-group">
+                    <label for="documentSource">FONTE:</label>
+                    <input type="text" id="documentSource" name="documentSource" placeholder="FONTE DE PUBLICAÇÃO">
+                </div>
+                <div class="form-group">
+                    <label for="documentNotes">NOTAS:</label>
+                    <input type="text" id="documentNotes" name="documentNotes" placeholder="NOTAS DO DOCUMENTO">
+                </div>
+                <button type="submit" class="submit-button">ADICIONAR</button>
+            </form>
+        </section>
+    </main>
+
+    <div id="popup">
+        <span class="close" onclick="closePopup()">&times;</span>
+        <p id="popupMessage"></p>
+    </div>
+
+    <script>
+        document.getElementById("addDocumentForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            var formData = new FormData(this);
+            fetch(this.action, {
+                method: this.method,
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showPopup(data.message);
+                } else {
+                    showPopup("Erro: " + data.message);
+                }
+            })
+            .catch(error => {
+                showPopup("Erro: " + error.message);
+            });
+        });
+
+        function showPopup(message) {
+            var popup = document.getElementById("popup");
+            var popupMessage = document.getElementById("popupMessage");
+            popupMessage.textContent = message;
+            popup.style.display = "block";
+        }
+
+        function closePopup() {
+            var popup = document.getElementById("popup");
+            popup.style.display = "none";
+        }
+    </script>
+</body>
+</html>

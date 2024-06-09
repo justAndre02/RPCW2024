@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Informações do Documento - Diário da República</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename="informacao-documento/style.css") }}"/>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="{{ url_for('static', filename="DRE.png") }}" alt="Diário da República">
+        </div>
+        <div class="home-icon">
+            <a href="/"><img src="{{ url_for('static', filename="home.png") }}" alt="Home"></a>
+        </div>
+    </header>
+  <main>
+    <section class="document-info">
+      <h2>{{data['name']}}</h2>
+      <div class="details">
+        <p>ID: <span id="document-id">{{data['id']}}</span></p>
+        <p>NOME: <span id="document-name">{{data['name']}}</span></p>
+        <p>TIPO: <a href="/documentos/by_type/{{data['type']}}_pag=1">{{data['type']}}</a></p>
+        <p>DATA: <span id="document-type">{{data['date']}}</span></p>
+        <p>EMITIDO POR: 
+          <span id="document-issuer">
+            {% for emitter in data['emitter'] %}
+              <a href="/documentos/by_author/{{ emitter.replace(' ', '_') }}_pag=1">{{ emitter }}</a><br>
+            {% endfor %}
+          </span>
+        </p>
+          
+        <p>NOTAS: <span id="document-notes">{{data['notes']}}</span></p>
+        <p>SÉRIE: <span id="document-series">{{data['series']}}</span></p>
+        <p>FONTE: <span id="document-source">{{data['source']}}</span></p>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,70 @@
+@import url("https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css");
+@import url("https://fonts.googleapis.com/css?family=Inter:400,700,800");
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 10px 20px;
+}
+
+.logo img {
+    height: 50px;
+}
+
+.home-icon img {
+    height: 40px;
+}
+
+main {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    background-color: #F0EBE5;
+}
+
+.content {
+    font-family: 'Inter-Bold', Helvetica, sans-serif;
+    font-weight: 700;
+    text-align: center;
+}
+
+.content h1 {
+    font-size: 4em;
+    margin-bottom: 100px;
+}
+
+.buttons-container {
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    gap: 70px;
+    width: 80%;
+}
+
+.document-button {
+    font-family: 'Inter-Bold', Helvetica, sans-serif;
+    font-weight: 800;
+    font-size: 1.2em;
+    background-color: #006400;
+    color: white;
+    padding: 20px 30px;
+    text-decoration: none;
+    text-align: center;
+    border-radius: 5px;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+}
+
+.document-button:hover {
+    background-color: #004b00;
+}
