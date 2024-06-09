@@ -13,7 +13,7 @@ O nosso projeto é baseado na proposta número dois dada pelo professor e foca-s
 ### Ontologia desenvolvida
 Neste capítulo iremos focar no processo por trás da ontologia criada, abordando a estrutura da mesma e a recolha dos dados.
 
-Neste momento a ontologia desenvolvida encontra-se fora dorepositório por ser demasiado grande, para poder acedê-la basta clicar no link: https://drive.google.com/file/d/1T-HtpgDvD0JAKYtx6B4jlYQJRvZAkSS3/view?usp=sharing
+Neste momento a ontologia desenvolvida encontra-se fora dorepositório por ser demasiado grande, para poder acedê-la basta clicar no link: https://drive.google.com/file/d/10smwo4RDShTUYqr9VcTpOQyPkf9wsito/view?usp=sharing
 
 #### Estrutura da ontologia
 Baseado no conteúdo disponibilizado pelo professor chegamos a um acordo de como deveria ser a estrutura da ontologia. Em primeiro lugar ponderamos o contexto na qual a ontologia se encaixa e daí determinamos o domínio como sendo a publicação de documentos associados a uma ou mais entidade.
